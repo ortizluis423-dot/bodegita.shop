@@ -39,6 +39,12 @@ const nextConfig: NextConfig = {
         hostname: 'e01-elmundo.uecdn.es',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.istockphoto.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

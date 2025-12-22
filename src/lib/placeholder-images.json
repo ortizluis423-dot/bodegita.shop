@@ -23,6 +23,12 @@
       "description": "A single cigarette.",
       "imageUrl": "https://e01-elmundo.uecdn.es/assets/multimedia/imagenes/2025/04/07/17440145195606.jpg",
       "imageHint": "single cigarette"
+    },
+    {
+      "id": "jabon-de-bano",
+      "description": "A bar of bath soap.",
+      "imageUrl": "https://media.istockphoto.com/id/624111862/es/foto/tiempo-de-ba%C3%B1o.jpg?s=612x612&w=0&k=20&c=T8QmJLfFFjKymgBDLoS1T6v9BNKSkywgoA1hSDauxCg=",
+      "imageHint": "bar soap"
     }
   ]
 }

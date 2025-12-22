@@ -5,9 +5,10 @@ const eggImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
 const halfEggImage = PlaceHolderImages.find(img => img.id === 'medio-carton-de-huevos');
 const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
 const singleCigarImage = PlaceHolderImages.find(img => img.id === 'cigarrillo-detal');
+const soapImage = PlaceHolderImages.find(img => img.id === 'jabon-de-bano');
 
 
-if (!eggImage || !halfEggImage || !cigarImage || !singleCigarImage) {
+if (!eggImage || !halfEggImage || !cigarImage || !singleCigarImage || !soapImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -64,4 +65,17 @@ export const products: Product[] = [
       hint: singleCigarImage.imageHint,
     }
   },
+  {
+    id: '5',
+    name: 'Jabón de Baño',
+    description: 'Jabón de baño para una limpieza refrescante.',
+    priceUSD: 0.80,
+    image: {
+      src: soapImage.imageUrl,
+      alt: 'Una barra de jabón de baño',
+      width: 612,
+      height: 408,
+      hint: soapImage.imageHint,
+    }
+  }
 ];
