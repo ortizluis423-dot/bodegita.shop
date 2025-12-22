@@ -4,8 +4,10 @@ import { PlaceHolderImages } from './placeholder-images';
 const eggImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
 const halfEggImage = PlaceHolderImages.find(img => img.id === 'medio-carton-de-huevos');
 const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
+const singleCigarImage = PlaceHolderImages.find(img => img.id === 'cigarrillo-detal');
 
-if (!eggImage || !halfEggImage || !cigarImage) {
+
+if (!eggImage || !halfEggImage || !cigarImage || !singleCigarImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -47,6 +49,19 @@ export const products: Product[] = [
       width: 400,
       height: 300,
       hint: cigarImage.imageHint,
+    }
+  },
+  {
+    id: '4',
+    name: 'Cigarrillo Sahara (detal)',
+    description: 'Un (1) cigarrillo Sahara.',
+    priceUSD: 0.07,
+    image: {
+      src: singleCigarImage.imageUrl,
+      alt: 'Un cigarrillo individual',
+      width: 400,
+      height: 300,
+      hint: singleCigarImage.imageHint,
     }
   },
 ];

@@ -17,6 +17,12 @@
       "description": "A box of Sahara brand cigarettes.",
       "imageUrl": "https://scontent-mia3-3.xx.fbcdn.net/v/t39.30808-6/470469879_889776966687632_1228723634421267465_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=wPnFKpFvK_AQ7kNvwGs7lwU&_nc_oc=AdlgTJNRCMXUvGbTWo-1zx0FLUIJaPpgrTS_yh6BL5K305zR9k686bgfF8nG_8_NLUE&_nc_zt=23&_nc_ht=scontent-mia3-3.xx&_nc_gid=RSUBEhYRY-S2FG5pB_BKwg&oh=00_Afn43P9-gOdD7UW1e-ot2jv87s88EgRLi9TfLQo0pQK76A&oe=694FA1F4",
       "imageHint": "cigar box"
+    },
+    {
+      "id": "cigarrillo-detal",
+      "description": "A single cigarette.",
+      "imageUrl": "https://e01-elmundo.uecdn.es/assets/multimedia/imagenes/2025/04/07/17440145195606.jpg",
+      "imageHint": "single cigarette"
     }
   ]
 }

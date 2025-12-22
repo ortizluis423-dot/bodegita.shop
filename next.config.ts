@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         hostname: 'scontent-mia3-3.xx.fbcdn.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'e01-elmundo.uecdn.es',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
