@@ -25,7 +25,8 @@ export const products: Product[] = [
       width: 400,
       height: 300,
       hint: eggImage.imageHint,
-    }
+    },
+    category: 'Víveres',
   },
   {
     id: '2',
@@ -39,6 +40,7 @@ export const products: Product[] = [
       height: 300,
       hint: halfEggImage.imageHint,
     },
+    category: 'Víveres',
   },
   {
     id: '6',
@@ -51,7 +53,8 @@ export const products: Product[] = [
       width: 225,
       height: 225,
       hint: singleEggImage.imageHint,
-    }
+    },
+    category: 'Víveres',
   },
   {
     id: '3',
@@ -64,7 +67,8 @@ export const products: Product[] = [
       width: 400,
       height: 300,
       hint: cigarImage.imageHint,
-    }
+    },
+    category: 'Cigarrillos',
   },
   {
     id: '4',
@@ -77,7 +81,8 @@ export const products: Product[] = [
       width: 400,
       height: 300,
       hint: singleCigarImage.imageHint,
-    }
+    },
+    category: 'Cigarrillos',
   },
   {
     id: '5',
@@ -90,6 +95,7 @@ export const products: Product[] = [
       width: 612,
       height: 408,
       hint: soapImage.imageHint,
-    }
+    },
+    category: 'Cuidado Personal',
   }
 ];

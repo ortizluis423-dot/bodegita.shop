@@ -9,10 +9,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { ShoppingCart } from "lucide-react";
 
@@ -27,31 +24,29 @@ export function ProductCard({ product }: ProductCardProps) {
   const priceVES = product.priceUSD * rate;
 
   return (
-    <Card className="flex flex-col overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-      <CardHeader className="p-0">
-        <div className="relative w-full aspect-[4/3]">
-          <Image
-            src={product.image.src}
-            alt={product.image.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            data-ai-hint={product.image.hint}
-          />
-        </div>
-      </CardHeader>
-      <CardContent className="p-4 flex-grow">
-        <CardTitle className="text-lg font-headline">{product.name}</CardTitle>
-        <CardDescription className="mt-2 text-sm">
+    <Card className="flex flex-col overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl rounded-xl">
+      <div className="relative w-full aspect-square">
+        <Image
+          src={product.image.src}
+          alt={product.image.alt}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          data-ai-hint={product.image.hint}
+        />
+      </div>
+      <CardContent className="p-4 flex-grow flex flex-col">
+        <h3 className="text-lg font-semibold font-headline flex-grow">{product.name}</h3>
+        <p className="text-sm text-muted-foreground mt-1">
           {product.description}
-        </CardDescription>
+        </p>
       </CardContent>
       <CardFooter className="flex flex-col items-start p-4 pt-0">
-        <div className="w-full">
-          <p className="text-xl font-bold">{formatToUSD(product.priceUSD)}</p>
-          <p className="text-md text-muted-foreground">{formatToVES(priceVES)}</p>
+        <div className="w-full mb-4">
+          <p className="text-2xl font-bold">{formatToUSD(product.priceUSD)}</p>
+          <p className="text-sm text-muted-foreground">{formatToVES(priceVES)}</p>
         </div>
-        <Button className="w-full mt-4" onClick={() => addToCart(product)}>
+        <Button className="w-full" onClick={() => addToCart(product)}>
           <ShoppingCart className="mr-2 h-4 w-4" /> Añadir al carrito
         </Button>
       </CardFooter>

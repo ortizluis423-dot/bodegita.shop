@@ -10,6 +10,7 @@ export interface Product {
     height: number;
     hint: string;
   };
+  category: string;
 }
 
 export interface CartItem extends Product {
