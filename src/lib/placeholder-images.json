@@ -15,7 +15,7 @@
     {
       "id": "caja-de-cigarros",
       "description": "A box of Sahara brand cigarettes.",
-      "imageUrl": "https://images.unsplash.com/photo-1682966080258-c60cb4dcc091?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjaWdhciUyMGJveHxlbnwwfHx8fDE3NjY0NDIwMjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://storage.googleapis.com/starthere-media/sahara-cigarros.webp",
       "imageHint": "cigar box"
     }
   ]
