@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'storage.googleapis.com',
+        hostname: 'scontent-mia3-3.xx.fbcdn.net',
         port: '',
         pathname: '/**',
       }
