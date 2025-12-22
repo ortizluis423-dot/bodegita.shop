@@ -35,6 +35,12 @@
       "description": "A single egg.",
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_6OVBZ68pE9tDvVELCoAxX2vMEiGIHORATw&s",
       "imageHint": "single egg"
+    },
+    {
+      "id": "avance-efectivo",
+      "description": "Hands holding Venezuelan bolivares and US dollars.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6sV7x-F8jZ1s2w9Y3R_J3tY2-K9wZ5h7qQ&s",
+      "imageHint": "cash money"
     }
   ]
 }

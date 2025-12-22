@@ -1,6 +1,7 @@
 import { products } from "@/lib/products";
 import { ProductCard } from "@/components/product-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CashAdvanceCard } from "@/components/cash-advance-card";
 
 export default function HomePage() {
   const categories = ["Todos", ...Array.from(new Set(products.map((p) => p.category)))];
@@ -14,6 +15,10 @@ export default function HomePage() {
         <p className="mt-4 text-lg md:text-xl text-foreground max-w-2xl mx-auto">
           Los mejores productos, al mejor precio. Directo a tu puerta.
         </p>
+      </section>
+
+      <section className="mb-12">
+        <CashAdvanceCard />
       </section>
 
       <Tabs defaultValue="Todos" className="w-full">
