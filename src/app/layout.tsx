@@ -1,6 +1,5 @@
 import './globals.css';
 import type {Metadata} from 'next';
-import {Toaster} from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Bodega Express',
@@ -21,7 +20,6 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         {children}
-        <Toaster />
       </body>
     </html>
   );

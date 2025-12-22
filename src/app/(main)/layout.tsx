@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/header";
 import { Providers } from "@/components/providers";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function MainLayout({
   children,
@@ -12,6 +13,7 @@ export default function MainLayout({
         <Header />
         <main className="flex-1">{children}</main>
       </div>
+      <Toaster />
     </Providers>
   );
 }
