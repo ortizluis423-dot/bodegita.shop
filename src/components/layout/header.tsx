@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { CartSheet } from "@/components/cart-sheet";
 import { useCart } from "@/hooks/use-cart";
+import { useMounted } from "@/hooks/use-mounted";
 
 export function Header() {
   const { cartCount } = useCart();
+  const mounted = useMounted();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-sm">
@@ -20,22 +22,24 @@ export function Header() {
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
-                  <ShoppingCart className="h-5 w-5" />
-                  {cartCount > 0 && (
-                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-primary-foreground transform translate-x-1/2 -translate-y-1/2 bg-primary rounded-full">
-                      {cartCount}
-                    </span>
-                  )}
-                  <span className="sr-only">Open shopping cart</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <CartSheet />
-              </SheetContent>
-            </Sheet>
+            {mounted && (
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="relative">
+                    <ShoppingCart className="h-5 w-5" />
+                    {cartCount > 0 && (
+                      <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-primary-foreground transform translate-x-1/2 -translate-y-1/2 bg-primary rounded-full">
+                        {cartCount}
+                      </span>
+                    )}
+                    <span className="sr-only">Open shopping cart</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <CartSheet />
+                </SheetContent>
+              </Sheet>
+            )}
           </nav>
         </div>
       </div>
