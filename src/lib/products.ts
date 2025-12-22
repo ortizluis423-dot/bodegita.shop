@@ -3,10 +3,10 @@ import { PlaceHolderImages } from './placeholder-images';
 
 const eggImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
 const halfEggImage = PlaceHolderImages.find(img => img.id === 'medio-carton-de-huevos');
-// El objeto de la imagen del cigarro se manejará directamente abajo.
+const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
 
-if (!eggImage || !halfEggImage) {
-  throw new Error('Placeholder images for eggs not found');
+if (!eggImage || !halfEggImage || !cigarImage) {
+  throw new Error('Placeholder images not found');
 }
 
 export const products: Product[] = [
@@ -42,11 +42,11 @@ export const products: Product[] = [
     description: 'Caja de cigarros Sahara, 10 unidades.',
     priceUSD: 1.15,
     image: {
-      src: 'https://storage.googleapis.com/starthere-media/caja-cigarros.jpg',
+      src: cigarImage.imageUrl,
       alt: 'Caja de cigarros marca Sahara',
       width: 400,
       height: 300,
-      hint: 'cigar box',
+      hint: cigarImage.imageHint,
     }
   },
 ];
