@@ -3,12 +3,13 @@ import { PlaceHolderImages } from './placeholder-images';
 
 const eggImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
 const halfEggImage = PlaceHolderImages.find(img => img.id === 'medio-carton-de-huevos');
+const singleEggImage = PlaceHolderImages.find(img => img.id === 'huevo-detal');
 const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
 const singleCigarImage = PlaceHolderImages.find(img => img.id === 'cigarrillo-detal');
 const soapImage = PlaceHolderImages.find(img => img.id === 'jabon-de-bano');
 
 
-if (!eggImage || !halfEggImage || !cigarImage || !singleCigarImage || !soapImage) {
+if (!eggImage || !halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -38,6 +39,19 @@ export const products: Product[] = [
       height: 300,
       hint: halfEggImage.imageHint,
     },
+  },
+  {
+    id: '6',
+    name: 'Huevo (detal)',
+    description: 'Un (1) huevo fresco.',
+    priceUSD: 0.25,
+    image: {
+      src: singleEggImage.imageUrl,
+      alt: 'Un huevo individual',
+      width: 225,
+      height: 225,
+      hint: singleEggImage.imageHint,
+    }
   },
   {
     id: '3',

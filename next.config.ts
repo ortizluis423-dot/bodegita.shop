@@ -45,6 +45,12 @@ const nextConfig: NextConfig = {
         hostname: 'media.istockphoto.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
