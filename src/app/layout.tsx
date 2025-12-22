@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
-import './globals.css';
 import {Providers} from '@/components/providers';
 import {Toaster} from '@/components/ui/toaster';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Bodega Express',
