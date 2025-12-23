@@ -101,6 +101,12 @@
       "description": "A 2-liter bottle of Glup chinoto soda.",
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBIqKnikGPj6lAYiUoxyR3DDiZ2n-XI2T1eg&s",
       "imageHint": "soda bottle"
+    },
+    {
+      "id": "glup-colita-2l",
+      "description": "A 2-liter bottle of Glup colita soda.",
+      "imageUrl": "https://assets.tuzonamarket.com/images/producto/CmxsYbM3BO.jpg",
+      "imageHint": "soda bottle"
     }
   ]
 }

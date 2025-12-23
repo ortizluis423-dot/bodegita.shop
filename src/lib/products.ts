@@ -16,9 +16,10 @@ const razorImage = PlaceHolderImages.find(img => img.id === 'cuchilla-de-afeitar
 const sardineImage = PlaceHolderImages.find(img => img.id === 'sardina-en-lata');
 const detergentImage = PlaceHolderImages.find(img => img.id === 'detergente-oso-blanco');
 const glupImage = PlaceHolderImages.find(img => img.id === 'glup-chinoto-2l');
+const glupColitaImage = PlaceHolderImages.find(img => img.id === 'glup-colita-2l');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -90,6 +91,20 @@ export const products: Product[] = [
       width: 500,
       height: 500,
       hint: glupImage.imageHint,
+    },
+    category: 'Bebidas',
+  },
+  {
+    id: '17',
+    name: 'Glup Colita 2L',
+    description: 'Bebida gaseosa sabor a colita, 2 litros.',
+    priceUSD: 1.00,
+    image: {
+      src: glupColitaImage.imageUrl,
+      alt: 'Botella de Glup Colita de 2 litros',
+      width: 480,
+      height: 480,
+      hint: 'soda bottle',
     },
     category: 'Bebidas',
   },

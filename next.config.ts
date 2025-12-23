@@ -99,6 +99,12 @@ const nextConfig: NextConfig = {
         hostname: 'triomcbo.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.tuzonamarket.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
