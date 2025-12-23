@@ -1,5 +1,4 @@
 import AuthGuard from "@/components/auth-guard";
-import { Providers } from "@/components/providers";
 
 export default function AdminLayout({
   children,
@@ -7,8 +6,6 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers>
-      <AuthGuard>{children}</AuthGuard>
-    </Providers>
+    <AuthGuard>{children}</AuthGuard>
   );
 }

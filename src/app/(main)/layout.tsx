@@ -1,5 +1,4 @@
 import { Header } from "@/components/layout/header";
-import { Providers } from "@/components/providers";
 
 export default function MainLayout({
   children,
@@ -7,11 +6,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers>
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-      </div>
-    </Providers>
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+        {children}
+      </main>
+    </div>
   );
 }
