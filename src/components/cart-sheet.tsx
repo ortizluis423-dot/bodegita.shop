@@ -64,14 +64,15 @@ ${orderDetails}
             <div className="flex flex-col gap-6">
               {cartItems.map((item) => (
                 <div key={item.id} className="flex items-center gap-4">
-                  <Image
-                    src={item.image.src}
-                    alt={item.image.alt}
-                    width={64}
-                    height={64}
-                    className="rounded-md object-cover"
-                    data-ai-hint={item.image.hint}
-                  />
+                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
+                    <Image
+                      src={item.image.src}
+                      alt={item.image.alt}
+                      fill
+                      className="object-cover"
+                      data-ai-hint={item.image.hint}
+                    />
+                  </div>
                   <div className="flex-grow">
                     <p className="font-semibold">{item.name}</p>
                     <p className="text-sm text-muted-foreground">
@@ -124,12 +125,12 @@ ${orderDetails}
                   </p>
                 </div>
               </div>
-              <Button className="w-full" onClick={handleWhatsAppCheckout}>
+              <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90" onClick={handleWhatsAppCheckout}>
                 <Send className="mr-2 h-4 w-4" />
                 Realizar Pedido por WhatsApp
               </Button>
               <Button
-                variant="destructive"
+                variant="outline"
                 className="w-full"
                 onClick={clearCart}
               >

@@ -13,34 +13,31 @@ export function Header() {
   const mounted = useMounted();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-sm">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-        <div className="flex gap-6 md:gap-10">
-          <Link href="/" className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold font-headline text-primary">Bodega Express</h1>
-          </Link>
-        </div>
-        <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-1">
-            {mounted && (
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative">
-                    <ShoppingCart className="h-5 w-5" />
-                    {cartCount > 0 && (
-                      <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-primary-foreground transform translate-x-1/2 -translate-y-1/2 bg-primary rounded-full">
-                        {cartCount}
-                      </span>
-                    )}
-                    <span className="sr-only">Open shopping cart</span>
-                  </Button>
-                </SheetTrigger>
-                <SheetContent>
-                  <CartSheet />
-                </SheetContent>
-              </Sheet>
-            )}
-          </nav>
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur-sm">
+      <div className="container flex h-16 items-center justify-between">
+        <Link href="/" className="flex items-center space-x-2">
+          <h1 className="text-xl font-bold text-foreground">Bodega Express</h1>
+        </Link>
+        
+        <div className="flex items-center space-x-1">
+          {mounted && (
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <ShoppingCart className="h-5 w-5" />
+                  {cartCount > 0 && (
+                    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                      {cartCount}
+                    </span>
+                  )}
+                  <span className="sr-only">Open shopping cart</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <CartSheet />
+              </SheetContent>
+            </Sheet>
+          )}
         </div>
       </div>
     </header>

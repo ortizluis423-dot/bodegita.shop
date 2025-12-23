@@ -67,67 +67,62 @@ export function CashAdvanceCard() {
   };
 
   return (
-    <Card className="flex flex-col md:flex-row overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl rounded-xl">
-      <div className="relative w-full md:w-1/3 aspect-video md:aspect-auto">
-        <Image
-          src={cashAdvanceImage.imageUrl}
-          alt={cashAdvanceImage.description}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 33vw"
-          data-ai-hint={cashAdvanceImage.imageHint}
-        />
-      </div>
-      <div className="flex flex-col flex-grow">
-        <CardHeader>
-          <CardTitle className="font-headline text-2xl">
-            Avance de Efectivo
-          </CardTitle>
-          <CardDescription>
-            Solicita tu avance de efectivo con un 10% de recargo. Recibe el
-            pago por transferencia.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex-grow space-y-4">
-          <div className="grid w-full items-center gap-1.5">
-            <Label htmlFor="cash-amount">Monto en USD</Label>
-            <Input
-              type="number"
-              id="cash-amount"
-              placeholder="Ej: 50.00"
-              value={amount || ""}
-              onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
-              className="text-lg font-bold"
-            />
-          </div>
-          {amount > 0 && (
-            <div className="p-4 bg-muted rounded-md text-sm">
-              <p>
-                <strong>Monto a solicitar:</strong> {formatToUSD(amount)}
-              </p>
-              <p>
-                <strong>Recargo (10%):</strong> {formatToUSD(amount * surcharge)}
-              </p>
-              <hr className="my-2" />
-              <p className="font-bold text-base">
-                Total a pagar: {formatToUSD(totalAmount)}
-              </p>
-              <p className="text-muted-foreground">
-                Equivalente a: {formatToVES(totalAmountVES)}
-              </p>
+    <Card className="overflow-hidden shadow-sm border-none bg-secondary">
+      <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col flex-grow p-6">
+          <CardHeader className="p-0 mb-4">
+            <CardTitle className="font-bold text-xl">
+              Avance de Efectivo
+            </CardTitle>
+            <CardDescription>
+              Solicita tu avance con un 10% de recargo.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex-grow space-y-4 p-0">
+            <div className="grid w-full items-center gap-1.5">
+              <Label htmlFor="cash-amount" className="font-semibold">Monto en USD</Label>
+              <Input
+                type="number"
+                id="cash-amount"
+                placeholder="Ej: 50.00"
+                value={amount || ""}
+                onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+                className="text-base font-bold bg-background border-border"
+              />
             </div>
-          )}
-        </CardContent>
-        <CardFooter>
-          <Button
-            className="w-full"
-            onClick={handleWhatsAppRequest}
-            disabled={amount <= 0}
-          >
-            <Send className="mr-2 h-4 w-4" />
-            Solicitar por WhatsApp
-          </Button>
-        </CardFooter>
+            {amount > 0 && (
+              <div className="p-4 bg-background rounded-md text-sm space-y-1">
+                <div className="flex justify-between">
+                  <span>Monto a solicitar:</span>
+                  <span className="font-medium">{formatToUSD(amount)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Recargo (10%):</span>
+                  <span className="font-medium">{formatToUSD(amount * surcharge)}</span>
+                </div>
+                <hr className="my-1 border-border" />
+                <div className="flex justify-between font-bold text-base">
+                  <span>Total a pagar:</span>
+                  <span>{formatToUSD(totalAmount)}</span>
+                </div>
+                <div className="flex justify-between text-muted-foreground text-sm">
+                  <span>Equivalente a:</span>
+                  <span>{formatToVES(totalAmountVES)}</span>
+                </div>
+              </div>
+            )}
+          </CardContent>
+          <CardFooter className="p-0 pt-4">
+            <Button
+              className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+              onClick={handleWhatsAppRequest}
+              disabled={amount <= 0}
+            >
+              <Send className="mr-2 h-4 w-4" />
+              Solicitar por WhatsApp
+            </Button>
+          </CardFooter>
+        </div>
       </div>
     </Card>
   );
