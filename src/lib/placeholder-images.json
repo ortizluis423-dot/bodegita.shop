@@ -89,6 +89,12 @@
       "description": "Canned sardines, 170g.",
       "imageUrl": "https://triomcbo.com/wp-content/uploads/2023/11/C646-Sardina-Puerto-Alegre-170g.jpg",
       "imageHint": "canned sardines"
+    },
+    {
+      "id": "detergente-oso-blanco",
+      "description": "Bolsa de detergente en polvo Oso Blanco.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_x_2_O6q_mB-B0J7L0_p-V_qSgLp-F-3g&s",
+      "imageHint": "detergent powder"
     }
   ]
 }

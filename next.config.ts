@@ -71,7 +71,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
+        protocol: 'https' ,
         hostname: 'packme.com.sv',
         port: '',
         pathname: '/**',

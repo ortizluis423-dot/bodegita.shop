@@ -14,9 +14,10 @@ const nutribelaImage = PlaceHolderImages.find(img => img.id === 'nutribela');
 const slicedBreadImage = PlaceHolderImages.find(img => img.id === 'pan-dulce-rebanado');
 const razorImage = PlaceHolderImages.find(img => img.id === 'cuchilla-de-afeitar');
 const sardineImage = PlaceHolderImages.find(img => img.id === 'sardina-en-lata');
+const detergentImage = PlaceHolderImages.find(img => img.id === 'detergente-oso-blanco');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -80,7 +81,7 @@ export const products: Product[] = [
   {
     id: '3',
     name: 'Caja de Cigarros Sahara',
-    description: 'Caja de cigarros Sahara, 10 unidades.',
+    description: 'Caja de cigarros Sahara, 20 unidades.',
     priceUSD: 1.15,
     image: {
       src: cigarImage.imageUrl,
@@ -174,6 +175,20 @@ export const products: Product[] = [
       hint: razorImage.imageHint,
     },
     category: 'Cuidado Personal',
+  },
+    {
+    id: '15',
+    name: 'Detergente en Polvo',
+    description: 'Detergente en polvo para la ropa.',
+    priceUSD: 1.00,
+    image: {
+      src: detergentImage.imageUrl,
+      alt: 'Bolsa de detergente en polvo',
+      width: 225,
+      height: 278,
+      hint: 'detergent powder',
+    },
+    category: 'Limpieza',
   },
   {
     id: '7',
