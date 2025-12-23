@@ -10,9 +10,10 @@ const catalinaImage = PlaceHolderImages.find(img => img.id === 'catalina-unidad'
 const toiletPaperPackImage = PlaceHolderImages.find(img => img.id === 'papel-higienico-paquete');
 const toiletPaperRollImage = PlaceHolderImages.find(img => img.id === 'papel-higienico-rollo');
 const coffeeImage = PlaceHolderImages.find(img => img.id === 'cafe-granel');
+const nutribelaImage = PlaceHolderImages.find(img => img.id === 'nutribela');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -102,20 +103,6 @@ export const products: Product[] = [
     category: 'Cuidado Personal',
   },
   {
-    id: '7',
-    name: 'Catalina (unidad)',
-    description: 'Una (1) catalina criolla.',
-    priceUSD: 0.19,
-    image: {
-      src: catalinaImage.imageUrl,
-      alt: 'Una catalina o paledonia',
-      width: 400,
-      height: 300,
-      hint: catalinaImage.imageHint,
-    },
-    category: 'Panadería',
-  },
-  {
     id: '8',
     name: 'Papel Higiénico Caricias (4 Rollos)',
     description: 'Paquete de 4 rollos de papel higiénico.',
@@ -142,5 +129,33 @@ export const products: Product[] = [
       hint: toiletPaperRollImage.imageHint,
     },
     category: 'Cuidado Personal',
+  },
+   {
+    id: '11',
+    name: 'Nutribela 15 Tratamiento Capilar',
+    description: 'Sachet de tratamiento capilar Nutribela.',
+    priceUSD: 0.80,
+    image: {
+      src: nutribelaImage.imageUrl,
+      alt: 'Sachet de tratamiento capilar Nutribela',
+      width: 500,
+      height: 500,
+      hint: nutribelaImage.imageHint,
+    },
+    category: 'Cuidado Personal',
+  },
+  {
+    id: '7',
+    name: 'Catalina (unidad)',
+    description: 'Una (1) catalina criolla.',
+    priceUSD: 0.19,
+    image: {
+      src: catalinaImage.imageUrl,
+      alt: 'Una catalina o paledonia',
+      width: 400,
+      height: 300,
+      hint: catalinaImage.imageHint,
+    },
+    category: 'Panadería',
   }
 ];

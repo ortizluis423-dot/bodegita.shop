@@ -65,6 +65,12 @@
       "description": "100g of bulk coffee beans.",
       "imageUrl": "https://packme.com.sv/cdn/shop/products/Bolsa-Generica-Para-Cafe-Transparente-parte-delantera-y-cierre-central-trasero-400x400.png?v=1735838330&width=1445",
       "imageHint": "coffee beans"
+    },
+    {
+      "id": "nutribela",
+      "description": "Nutribela hair treatment sachet.",
+      "imageUrl": "https://http2.mlstatic.com/D_NQ_NP_776735-MLV50715772118_072022-O.webp",
+      "imageHint": "hair treatment"
     }
   ]
 }

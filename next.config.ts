@@ -75,6 +75,12 @@ const nextConfig: NextConfig = {
         hostname: 'packme.com.sv',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'http2.mlstatic.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
