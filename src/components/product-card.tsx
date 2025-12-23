@@ -19,8 +19,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const priceVES = product.priceUSD * rate;
 
   return (
-    <div className="group relative flex flex-col h-full">
-      <div className="relative aspect-square w-full overflow-hidden rounded-md bg-secondary">
+    <div className="group relative flex flex-col h-full bg-card p-4 rounded-lg border shadow-sm transition-all duration-300 hover:shadow-md">
+      <div className="relative aspect-square w-full overflow-hidden rounded-md">
         <Image
           src={product.image.src}
           alt={product.image.alt}
@@ -29,23 +29,21 @@ export function ProductCard({ product }: ProductCardProps) {
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           data-ai-hint={product.image.hint}
         />
+         <div className="absolute bottom-2 right-2 flex flex-col items-end">
+          <p className="text-lg font-bold text-background bg-foreground/80 px-2 py-0.5 rounded-md backdrop-blur-sm">{formatToUSD(product.priceUSD)}</p>
+          <p className="text-xs text-background bg-foreground/60 px-2 py-0.5 rounded-md backdrop-blur-sm mt-1">{formatToVES(priceVES)}</p>
+        </div>
       </div>
       <div className="mt-4 flex flex-col flex-grow">
         <div className="flex-grow">
-          <h3 className="text-sm font-medium text-foreground">
-            <a href="#">
-              <span aria-hidden="true" className="absolute inset-0" />
-              {product.name}
-            </a>
+          <h3 className="text-base font-semibold text-foreground">
+             {product.name}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">{product.description}</p>
         </div>
-        <div className="mt-2 flex flex-col items-start">
-          <p className="text-base font-bold text-foreground">{formatToUSD(product.priceUSD)}</p>
-          <p className="text-sm text-muted-foreground">{formatToVES(priceVES)}</p>
-        </div>
+       
       </div>
-       <Button size="sm" className="w-full mt-4" onClick={(e) => {
+      <Button variant="outline" size="sm" className="w-full mt-4" onClick={(e) => {
          e.preventDefault();
          addToCart(product)
         }}>
