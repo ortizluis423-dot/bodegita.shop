@@ -28,9 +28,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(ptSans.variable, playfairDisplay.variable)}
+      className={cn('font-body antialiased', ptSans.variable, playfairDisplay.variable)}
     >
-      <body className="font-body antialiased">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
