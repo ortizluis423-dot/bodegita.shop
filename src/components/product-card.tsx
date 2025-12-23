@@ -19,8 +19,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const priceVES = product.priceUSD * rate;
 
   return (
-    <div className="group relative">
-      <div className="aspect-square w-full overflow-hidden rounded-md bg-secondary lg:h-80">
+    <div className="group relative flex flex-col h-full">
+      <div className="relative aspect-square w-full overflow-hidden rounded-md bg-secondary">
         <Image
           src={product.image.src}
           alt={product.image.alt}
@@ -30,10 +30,9 @@ export function ProductCard({ product }: ProductCardProps) {
           data-ai-hint={product.image.hint}
         />
       </div>
-      <div className="mt-4 flex flex-col">
-        <div>
+      <div className="mt-4 flex flex-col flex-grow">
+        <div className="flex-grow">
           <h3 className="text-sm font-medium text-foreground">
-            {/* The link is now on the product name */}
             <a href="#">
               <span aria-hidden="true" className="absolute inset-0" />
               {product.name}
