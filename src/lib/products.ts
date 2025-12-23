@@ -15,9 +15,10 @@ const slicedBreadImage = PlaceHolderImages.find(img => img.id === 'pan-dulce-reb
 const razorImage = PlaceHolderImages.find(img => img.id === 'cuchilla-de-afeitar');
 const sardineImage = PlaceHolderImages.find(img => img.id === 'sardina-en-lata');
 const detergentImage = PlaceHolderImages.find(img => img.id === 'detergente-oso-blanco');
+const glupImage = PlaceHolderImages.find(img => img.id === 'glup-chinoto-2l');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -77,6 +78,20 @@ export const products: Product[] = [
       hint: sardineImage.imageHint,
     },
     category: 'Víveres',
+  },
+  {
+    id: '16',
+    name: 'Glup Chinotto 2L',
+    description: 'Bebida gaseosa sabor a chinotto, 2 litros.',
+    priceUSD: 1.00,
+    image: {
+      src: glupImage.imageUrl,
+      alt: 'Botella de Glup Chinotto de 2 litros',
+      width: 500,
+      height: 500,
+      hint: glupImage.imageHint,
+    },
+    category: 'Bebidas',
   },
   {
     id: '3',

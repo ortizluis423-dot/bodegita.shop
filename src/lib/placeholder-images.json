@@ -95,6 +95,12 @@
       "description": "Bolsa de detergente en polvo Oso Blanco.",
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxEEnmuAdbjOogUZYsNf2FE1uaFhxTt7lezg&s",
       "imageHint": "detergent powder"
+    },
+    {
+      "id": "glup-chinoto-2l",
+      "description": "A 2-liter bottle of Glup chinoto soda.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBIqKnikGPj6lAYiUoxyR3DDiZ2n-XI2T1eg&s",
+      "imageHint": "soda bottle"
     }
   ]
 }
