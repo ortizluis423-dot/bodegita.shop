@@ -1,6 +1,7 @@
+
 "use client";
 
-import { createContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useState, useEffect, ReactNode, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 // For a real application, this should be stored securely in environment variables.
@@ -23,8 +24,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // We use sessionStorage to ensure the auth state is not persisted across browser tabs
-    // or sessions, offering a slightly more secure approach than localStorage for this simple auth.
+    // This check now correctly runs only on the client side, after initial render.
+    // This prevents hydration mismatches.
     try {
       const storedAuth = sessionStorage.getItem(AUTH_STORAGE_KEY);
       if (storedAuth === "true") {
@@ -37,29 +38,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = (password: string) => {
+  const login = useCallback((password: string) => {
     if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
       try {
-        // Using sessionStorage is intentional here.
         sessionStorage.setItem(AUTH_STORAGE_KEY, "true");
+        setIsAuthenticated(true);
+        return true;
       } catch (e) {
         console.error("Could not access session storage:", e);
+        return false;
       }
-      return true;
     }
     return false;
-  };
+  }, []);
 
-  const signOut = () => {
-    setIsAuthenticated(false);
+  const signOut = useCallback(() => {
     try {
       sessionStorage.removeItem(AUTH_STORAGE_KEY);
+      setIsAuthenticated(false);
+      router.push("/login");
     } catch (e) {
       console.error("Could not access session storage:", e);
     }
-    router.push("/login");
-  };
+  }, [router]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, loading, login, signOut }}>
