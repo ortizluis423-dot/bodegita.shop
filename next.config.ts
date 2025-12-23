@@ -69,6 +69,12 @@ const nextConfig: NextConfig = {
         hostname: 'encrypted-tbn0.gstatic.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'packme.com.sv',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
