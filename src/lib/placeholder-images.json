@@ -77,6 +77,12 @@
       "description": "A loaf of sliced sweet bread.",
       "imageUrl": "https://image.shutterstock.com/image-photo/closeup-sliced-sweet-bread-loaf-260nw-2486696973.jpg",
       "imageHint": "sliced bread"
+    },
+    {
+      "id": "cuchilla-de-afeitar",
+      "description": "A disposable razor blade.",
+      "imageUrl": "https://cdn.creazilla.com/cliparts/77368/shaver-clipart-md.png",
+      "imageHint": "razor blade"
     }
   ]
 }

@@ -12,9 +12,10 @@ const toiletPaperRollImage = PlaceHolderImages.find(img => img.id === 'papel-hig
 const coffeeImage = PlaceHolderImages.find(img => img.id === 'cafe-granel');
 const nutribelaImage = PlaceHolderImages.find(img => img.id === 'nutribela');
 const slicedBreadImage = PlaceHolderImages.find(img => img.id === 'pan-dulce-rebanado');
+const razorImage = PlaceHolderImages.find(img => img.id === 'cuchilla-de-afeitar');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -142,6 +143,20 @@ export const products: Product[] = [
       width: 500,
       height: 500,
       hint: nutribelaImage.imageHint,
+    },
+    category: 'Cuidado Personal',
+  },
+  {
+    id: '13',
+    name: 'Cuchilla de Afeitar',
+    description: 'Cuchilla de afeitar desechable.',
+    priceUSD: 0.5,
+    image: {
+      src: razorImage.imageUrl,
+      alt: 'Cuchilla de afeitar desechable',
+      width: 500,
+      height: 500,
+      hint: razorImage.imageHint,
     },
     category: 'Cuidado Personal',
   },
