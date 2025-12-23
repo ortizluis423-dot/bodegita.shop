@@ -2,6 +2,7 @@ import './globals.css';
 import type {Metadata} from 'next';
 import { Playfair_Display, PT_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import { Providers } from '@/components/providers';
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -15,7 +16,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Bodega Express',
+  title: 'cachin',
   description: 'Your one-stop online shop.',
 };
 
@@ -30,7 +31,11 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn('font-body antialiased', ptSans.variable, playfairDisplay.variable)}
     >
-      <body>{children}</body>
+      <body>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }

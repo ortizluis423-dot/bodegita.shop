@@ -16,7 +16,7 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur-sm">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <h1 className="text-xl font-bold text-foreground font-headline">Bodega Express</h1>
+          <h1 className="text-xl font-bold text-foreground font-headline">cachin</h1>
         </Link>
         
         <div className="flex items-center space-x-1">
