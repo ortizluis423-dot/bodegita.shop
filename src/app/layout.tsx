@@ -25,16 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          'font-body antialiased',
-          ptSans.variable,
-          playfairDisplay.variable
-        )}
-      >
-        {children}
-      </body>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(ptSans.variable, playfairDisplay.variable)}
+    >
+      <body className="font-body antialiased">{children}</body>
     </html>
   );
 }
