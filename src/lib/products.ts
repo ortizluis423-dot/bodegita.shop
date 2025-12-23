@@ -7,9 +7,10 @@ const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
 const singleCigarImage = PlaceHolderImages.find(img => img.id === 'cigarrillo-detal');
 const soapImage = PlaceHolderImages.find(img => img.id === 'jabon-de-bano');
 const catalinaImage = PlaceHolderImages.find(img => img.id === 'catalina-unidad');
+const toiletPaperImage = PlaceHolderImages.find(img => img.id === 'papel-higienico');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -74,7 +75,7 @@ export const products: Product[] = [
     id: '5',
     name: 'Jabón de Baño',
     description: 'Jabón de baño para una limpieza refrescante.',
-    priceUSD: 0.80,
+    priceUSD: 0.8,
     image: {
       src: soapImage.imageUrl,
       alt: 'Una barra de jabón de baño',
@@ -97,5 +98,19 @@ export const products: Product[] = [
       hint: catalinaImage.imageHint,
     },
     category: 'Panadería',
+  },
+  {
+    id: '8',
+    name: 'Papel Higiénico Caricias',
+    description: 'Paquete de papel higiénico.',
+    priceUSD: 1.3,
+    image: {
+      src: toiletPaperImage.imageUrl,
+      alt: 'Paquete de Papel Higiénico Caricias',
+      width: 500,
+      height: 500,
+      hint: toiletPaperImage.imageHint,
+    },
+    category: 'Cuidado Personal',
   }
 ];

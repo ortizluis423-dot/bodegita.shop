@@ -57,6 +57,12 @@ const nextConfig: NextConfig = {
         hostname: 'dulcescriollos.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'somosdiadema.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

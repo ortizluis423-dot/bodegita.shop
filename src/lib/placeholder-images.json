@@ -47,6 +47,12 @@
       "description": "A single catalina cookie.",
       "imageUrl": "https://dulcescriollos.com/wp-content/uploads/2013/07/Catalinas.jpg",
       "imageHint": "catalina cookie"
+    },
+    {
+      "id": "papel-higienico",
+      "description": "A pack of Caricias toilet paper.",
+      "imageUrl": "https://somosdiadema.com/wp-content/uploads/2024/10/CARICIAS-215.webp",
+      "imageHint": "toilet paper"
     }
   ]
 }
