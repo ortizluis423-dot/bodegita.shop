@@ -11,6 +11,7 @@ export interface Product {
     hint: string;
   };
   category: string;
+  isVisible?: boolean;
 }
 
 export interface CartItem extends Product {

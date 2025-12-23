@@ -1,10 +1,18 @@
-import { products } from "@/lib/products";
-import { ProductCard } from "@/components/product-card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CashAdvanceCard } from "@/components/cash-advance-card";
+'use client';
+
+import { useProducts } from '@/hooks/use-products';
+import { ProductCard } from '@/components/product-card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { CashAdvanceCard } from '@/components/cash-advance-card';
 
 export default function HomePage() {
-  const categories = ["Todos", ...Array.from(new Set(products.map((p) => p.category)))];
+  const { products: allProducts } = useProducts();
+  const visibleProducts = allProducts.filter((p) => p.isVisible);
+  
+  const categories = [
+    'Todos',
+    ...Array.from(new Set(visibleProducts.map((p) => p.category))),
+  ];
 
   return (
     <div className="bg-background">
@@ -26,23 +34,25 @@ export default function HomePage() {
 
           <TabsContent value="Todos">
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-              {products.map((product) => (
+              {visibleProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </TabsContent>
 
-          {categories.filter(c => c !== "Todos").map((category) => (
-            <TabsContent key={category} value={category}>
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-                {products
-                  .filter((p) => p.category === category)
-                  .map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-              </div>
-            </TabsContent>
-          ))}
+          {categories
+            .filter((c) => c !== 'Todos')
+            .map((category) => (
+              <TabsContent key={category} value={category}>
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
+                  {visibleProducts
+                    .filter((p) => p.category === category)
+                    .map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+              </TabsContent>
+            ))}
         </Tabs>
       </div>
     </div>
