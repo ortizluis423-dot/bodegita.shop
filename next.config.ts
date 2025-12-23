@@ -81,7 +81,13 @@ const nextConfig: NextConfig = {
         hostname: 'http2.mlstatic.com',
         port: '',
         pathname: '/**',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'image.shutterstock.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

@@ -11,9 +11,10 @@ const toiletPaperPackImage = PlaceHolderImages.find(img => img.id === 'papel-hig
 const toiletPaperRollImage = PlaceHolderImages.find(img => img.id === 'papel-higienico-rollo');
 const coffeeImage = PlaceHolderImages.find(img => img.id === 'cafe-granel');
 const nutribelaImage = PlaceHolderImages.find(img => img.id === 'nutribela');
+const slicedBreadImage = PlaceHolderImages.find(img => img.id === 'pan-dulce-rebanado');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -155,6 +156,20 @@ export const products: Product[] = [
       width: 400,
       height: 300,
       hint: catalinaImage.imageHint,
+    },
+    category: 'Panadería',
+  },
+  {
+    id: '12',
+    name: 'Pan Dulce Rebanado',
+    description: 'Una rebanada de pan dulce.',
+    priceUSD: 0.15,
+    image: {
+      src: slicedBreadImage.imageUrl,
+      alt: 'Una rebanada de pan dulce',
+      width: 260,
+      height: 173,
+      hint: 'sliced bread',
     },
     category: 'Panadería',
   }

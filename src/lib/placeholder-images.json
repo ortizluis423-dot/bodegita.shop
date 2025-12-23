@@ -71,6 +71,12 @@
       "description": "Nutribela hair treatment sachet.",
       "imageUrl": "https://http2.mlstatic.com/D_NQ_NP_776735-MLV50715772118_072022-O.webp",
       "imageHint": "hair treatment"
+    },
+    {
+      "id": "pan-dulce-rebanado",
+      "description": "A loaf of sliced sweet bread.",
+      "imageUrl": "https://image.shutterstock.com/image-photo/closeup-sliced-sweet-bread-loaf-260nw-2486696973.jpg",
+      "imageHint": "sliced bread"
     }
   ]
 }
