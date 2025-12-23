@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { formatToUSD, formatToVES } from "@/lib/utils";
 import { useExchangeRate } from "@/hooks/use-exchange-rate";
 import { Button } from "@/components/ui/button";
@@ -20,23 +18,17 @@ import { Send } from "lucide-react";
 import { format } from "date-fns";
 
 export function CashAdvanceCard() {
-  const [amount, setAmount] = useState(0);
+  const [amountVES, setAmountVES] = useState(0);
   const { rate } = useExchangeRate();
-  const cashAdvanceImage = PlaceHolderImages.find(
-    (img) => img.id === "avance-efectivo"
-  );
-
-  if (!cashAdvanceImage) {
-    return null;
-  }
 
   const surcharge = 0.1; // 10%
-  const totalAmount = amount * (1 + surcharge);
-  const totalAmountVES = totalAmount * rate;
+  const amountUSD = rate > 0 ? amountVES / rate : 0;
+  const totalUSDToPay = amountUSD * (1 + surcharge);
+  const totalVESToPay = totalUSDToPay * rate;
   const phoneNumber = "584122877326";
 
   const handleWhatsAppRequest = () => {
-    if (amount <= 0) {
+    if (amountVES <= 0) {
       alert("Por favor, ingrese un monto válido.");
       return;
     }
@@ -49,11 +41,12 @@ export function CashAdvanceCard() {
 *Número de Referencia:* ${referenceNumber}
 
 *Detalles de la Solicitud:*
-  - Monto Solicitado: ${formatToUSD(amount)}
-  - Recargo (10%): ${formatToUSD(amount * surcharge)}
+  - Monto Solicitado: ${formatToVES(amountVES)}
+  - Equivalente en USD: ${formatToUSD(amountUSD)}
+  - Recargo (10%): ${formatToUSD(amountUSD * surcharge)}
 -----------------------------------
-*Total a Pagar (USD):* ${formatToUSD(totalAmount)}
-*Total a Pagar (Bs.):* ${formatToVES(totalAmountVES)} (Tasa: ${rate.toFixed(
+*Total a Pagar (USD):* ${formatToUSD(totalUSDToPay)}
+*Total a Pagar (Bs.):* ${formatToVES(totalVESToPay)} (Tasa: ${rate.toFixed(
       2
     )} Bs./USD)
 
@@ -80,34 +73,38 @@ export function CashAdvanceCard() {
           </CardHeader>
           <CardContent className="flex-grow space-y-4 p-0">
             <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="cash-amount" className="font-semibold">Monto en USD</Label>
+              <Label htmlFor="cash-amount" className="font-semibold">Monto en Bolívares</Label>
               <Input
                 type="number"
                 id="cash-amount"
-                placeholder="Ej: 50.00"
-                value={amount || ""}
-                onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
+                placeholder="Ej: 2000.00"
+                value={amountVES || ""}
+                onChange={(e) => setAmountVES(parseFloat(e.target.value) || 0)}
                 className="text-base font-bold bg-background border-border"
               />
             </div>
-            {amount > 0 && (
+            {amountVES > 0 && (
               <div className="p-4 bg-background rounded-md text-sm space-y-1">
                 <div className="flex justify-between">
                   <span>Monto a solicitar:</span>
-                  <span className="font-medium">{formatToUSD(amount)}</span>
+                  <span className="font-medium">{formatToVES(amountVES)}</span>
+                </div>
+                 <div className="flex justify-between">
+                  <span>Equivale a (USD):</span>
+                  <span className="font-medium">{formatToUSD(amountUSD)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Recargo (10%):</span>
-                  <span className="font-medium">{formatToUSD(amount * surcharge)}</span>
+                  <span className="font-medium">{formatToUSD(amountUSD * surcharge)}</span>
                 </div>
                 <hr className="my-1 border-border" />
                 <div className="flex justify-between font-bold text-base">
                   <span>Total a pagar:</span>
-                  <span>{formatToUSD(totalAmount)}</span>
+                  <span>{formatToVES(totalVESToPay)}</span>
                 </div>
                 <div className="flex justify-between text-muted-foreground text-sm">
-                  <span>Equivalente a:</span>
-                  <span>{formatToVES(totalAmountVES)}</span>
+                  <span>Equivalente en USD:</span>
+                  <span>{formatToUSD(totalUSDToPay)}</span>
                 </div>
               </div>
             )}
@@ -116,7 +113,7 @@ export function CashAdvanceCard() {
             <Button
               className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
               onClick={handleWhatsAppRequest}
-              disabled={amount <= 0}
+              disabled={amountVES <= 0}
             >
               <Send className="mr-2 h-4 w-4" />
               Solicitar por WhatsApp
