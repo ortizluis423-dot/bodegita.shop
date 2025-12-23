@@ -1,9 +1,14 @@
 'use client';
 
 import Image from 'next/image';
+import { useMemo } from 'react';
 import { useCart } from '@/hooks/use-cart';
 import { useExchangeRate } from '@/hooks/use-exchange-rate';
-import { formatToUSD, formatToVES } from '@/lib/utils';
+import {
+  formatToUSD,
+  formatToVES,
+  generateWhatsAppCheckoutMessage,
+} from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
@@ -16,39 +21,17 @@ export function CartSheet() {
     useCart();
   const { rate } = useExchangeRate();
 
-  const totalPriceVES = totalPriceUSD * rate;
-  const phoneNumber = '584122877326'; // Número de Venezuela sin el '+'
+  const totalPriceVES = useMemo(() => totalPriceUSD * rate, [totalPriceUSD, rate]);
+  const phoneNumber = '584122877326';
 
   const handleWhatsAppCheckout = () => {
-    const referenceNumber = format(new Date(), 'yyyyMMddHHmmss');
-
-    const orderDetails = cartItems
-      .map(
-        (item) =>
-          `*${item.name}*\n` +
-          `  - Cantidad: ${item.quantity}\n` +
-          `  - Precio: ${formatToUSD(item.priceUSD * item.quantity)}`
-      )
-      .join('\n\n');
-
-    const message = `
-¡Hola! 👋 Quiero realizar el siguiente pedido:
-
-*Número de Referencia:* ${referenceNumber}
-
-*Detalles del Pedido:*
-${orderDetails}
-
------------------------------------
-*Total en USD:* ${formatToUSD(totalPriceUSD)}
-*Total en Bs.:* ${formatToVES(totalPriceVES)} (Tasa: ${rate.toFixed(2)} Bs./USD)
-
-¡Gracias!
-    `;
-
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message.trim()
-    )}`;
+    const message = generateWhatsAppCheckoutMessage(
+      cartItems,
+      totalPriceUSD,
+      totalPriceVES,
+      rate
+    );
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -68,7 +51,8 @@ ${orderDetails}
                     <Image
                       src={item.image.src}
                       alt={item.image.alt}
-                      fill
+                      width={item.image.width}
+                      height={item.image.height}
                       className="object-cover"
                       data-ai-hint={item.image.hint}
                     />

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { formatToUSD, formatToVES } from "@/lib/utils";
+import { useState, useMemo } from "react";
+import { formatToUSD, formatToVES, generateWhatsAppCashAdvanceMessage } from "@/lib/utils";
 import { useExchangeRate } from "@/hooks/use-exchange-rate";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,47 +15,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Send } from "lucide-react";
-import { format } from "date-fns";
 
 export function CashAdvanceCard() {
   const [amountVES, setAmountVES] = useState(0);
   const { rate } = useExchangeRate();
-
-  const surcharge = 0.1; // 10%
-  const amountUSD = rate > 0 ? amountVES / rate : 0;
-  const totalUSDToPay = amountUSD * (1 + surcharge);
-  const totalVESToPay = totalUSDToPay * rate;
   const phoneNumber = "584122877326";
+  const surcharge = 0.1; // 10%
+
+  const { amountUSD, totalUSDToPay, totalVESToPay } = useMemo(() => {
+    const amountUSD = rate > 0 ? amountVES / rate : 0;
+    const totalUSDToPay = amountUSD * (1 + surcharge);
+    const totalVESToPay = totalUSDToPay * rate;
+    return { amountUSD, totalUSDToPay, totalVESToPay };
+  }, [amountVES, rate, surcharge]);
+
 
   const handleWhatsAppRequest = () => {
     if (amountVES <= 0) {
       alert("Por favor, ingrese un monto válido.");
       return;
     }
-
-    const referenceNumber = format(new Date(), "yyyyMMddHHmmss");
-
-    const message = `
-¡Hola! 👋 Quiero solicitar un Avance de Efectivo.
-
-*Número de Referencia:* ${referenceNumber}
-
-*Detalles de la Solicitud:*
-  - Monto Solicitado: ${formatToVES(amountVES)}
-  - Equivalente en USD: ${formatToUSD(amountUSD)}
-  - Recargo (10%): ${formatToUSD(amountUSD * surcharge)}
------------------------------------
-*Total a Pagar (USD):* ${formatToUSD(totalUSDToPay)}
-*Total a Pagar (Bs.):* ${formatToVES(totalVESToPay)} (Tasa: ${rate.toFixed(
-      2
-    )} Bs./USD)
-
-¡Gracias!
-    `;
-
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message.trim()
-    )}`;
+    const message = generateWhatsAppCashAdvanceMessage(
+      amountVES,
+      amountUSD,
+      totalUSDToPay,
+      totalVESToPay,
+      rate,
+      surcharge
+    );
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
 

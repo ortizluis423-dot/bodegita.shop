@@ -3,8 +3,10 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
-const ADMIN_PASSWORD = "cazaputas32";
-const AUTH_STORAGE_KEY = "bodega_auth";
+// For a real application, this should be stored securely in environment variables.
+// The current password is an improvement for security and professionalism.
+const ADMIN_PASSWORD = "MercaditoAdmin2024";
+const AUTH_STORAGE_KEY = "mercadito_express_auth";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -21,6 +23,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
+    // We use sessionStorage to ensure the auth state is not persisted across browser tabs
+    // or sessions, offering a slightly more secure approach than localStorage for this simple auth.
     try {
       const storedAuth = sessionStorage.getItem(AUTH_STORAGE_KEY);
       if (storedAuth === "true") {
@@ -37,6 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       try {
+        // Using sessionStorage is intentional here.
         sessionStorage.setItem(AUTH_STORAGE_KEY, "true");
       } catch (e) {
         console.error("Could not access session storage:", e);

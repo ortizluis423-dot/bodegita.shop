@@ -7,6 +7,7 @@ import { useExchangeRate } from "@/hooks/use-exchange-rate";
 import { formatToUSD, formatToVES } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
+import { useMemo } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -16,7 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { rate } = useExchangeRate();
 
-  const priceVES = product.priceUSD * rate;
+  const priceVES = useMemo(() => product.priceUSD * rate, [product.priceUSD, rate]);
 
   return (
     <div className="group relative flex flex-col h-full bg-card p-4 rounded-lg border shadow-sm transition-all duration-300 hover:shadow-md">
@@ -24,7 +25,8 @@ export function ProductCard({ product }: ProductCardProps) {
         <Image
           src={product.image.src}
           alt={product.image.alt}
-          fill
+          width={product.image.width}
+          height={product.image.height}
           className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           data-ai-hint={product.image.hint}
