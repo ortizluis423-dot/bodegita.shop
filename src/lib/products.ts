@@ -6,9 +6,10 @@ const singleEggImage = PlaceHolderImages.find(img => img.id === 'huevo-detal');
 const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
 const singleCigarImage = PlaceHolderImages.find(img => img.id === 'cigarrillo-detal');
 const soapImage = PlaceHolderImages.find(img => img.id === 'jabon-de-bano');
+const catalinaImage = PlaceHolderImages.find(img => img.id === 'catalina-unidad');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -82,5 +83,19 @@ export const products: Product[] = [
       hint: soapImage.imageHint,
     },
     category: 'Cuidado Personal',
+  },
+  {
+    id: '7',
+    name: 'Catalina (unidad)',
+    description: 'Una (1) catalina criolla.',
+    priceUSD: 0.19,
+    image: {
+      src: catalinaImage.imageUrl,
+      alt: 'Una catalina o paledonia',
+      width: 400,
+      height: 300,
+      hint: catalinaImage.imageHint,
+    },
+    category: 'Panadería',
   }
 ];

@@ -41,6 +41,12 @@
       "description": "Hands holding Venezuelan bolivares and US dollars.",
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6sV7x-F8jZ1s2w9Y3R_J3tY2-K9wZ5h7qQ&s",
       "imageHint": "cash money"
+    },
+    {
+      "id": "catalina-unidad",
+      "description": "A single catalina cookie.",
+      "imageUrl": "https://dulcescriollos.com/wp-content/uploads/2013/07/Catalinas.jpg",
+      "imageHint": "catalina cookie"
     }
   ]
 }
