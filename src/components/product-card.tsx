@@ -33,8 +33,11 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="mt-4 flex flex-col">
         <div>
           <h3 className="text-sm font-medium text-foreground">
-            <span aria-hidden="true" className="absolute inset-0" />
-            {product.name}
+            {/* The link is now on the product name */}
+            <a href="#">
+              <span aria-hidden="true" className="absolute inset-0" />
+              {product.name}
+            </a>
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">{product.description}</p>
         </div>

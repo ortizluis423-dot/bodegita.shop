@@ -1,7 +1,6 @@
 import type { Product } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
-const eggImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
 const halfEggImage = PlaceHolderImages.find(img => img.id === 'medio-carton-de-huevos');
 const singleEggImage = PlaceHolderImages.find(img => img.id === 'huevo-detal');
 const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
@@ -9,25 +8,11 @@ const singleCigarImage = PlaceHolderImages.find(img => img.id === 'cigarrillo-de
 const soapImage = PlaceHolderImages.find(img => img.id === 'jabon-de-bano');
 
 
-if (!eggImage || !halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage) {
   throw new Error('Placeholder images not found');
 }
 
 export const products: Product[] = [
-  {
-    id: '1',
-    name: 'Cartón de Huevos',
-    description: '30 unidades de huevos frescos.',
-    priceUSD: 7.00,
-    image: {
-      src: eggImage.imageUrl,
-      alt: 'Cartón de 30 huevos',
-      width: 400,
-      height: 300,
-      hint: eggImage.imageHint,
-    },
-    category: 'Víveres',
-  },
   {
     id: '2',
     name: 'Medio Cartón de Huevos',
