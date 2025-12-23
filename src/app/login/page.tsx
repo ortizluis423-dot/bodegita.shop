@@ -5,8 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useAuth } from "@/hooks/use-auth";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,19 +22,18 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
-  email: z.string().email({ message: "Por favor ingrese un email válido." }),
-  password: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres." }),
+  password: z.string().min(1, { message: "Por favor ingrese la contraseña." }),
 });
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
       password: "",
     },
   });
@@ -43,16 +41,11 @@ export default function LoginPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setError(null);
     setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+    const success = login(values.password);
+    if (success) {
       router.push("/admin");
-    } catch (error: any) {
-      if (error.code === 'auth/invalid-credential') {
-        setError("Email o contraseña incorrectos.");
-      } else {
-        setError("Ocurrió un error al iniciar sesión.");
-      }
-    } finally {
+    } else {
+      setError("Contraseña incorrecta.");
       setLoading(false);
     }
   }
@@ -70,23 +63,10 @@ export default function LoginPage() {
               {error && (
                 <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Error de Autenticación</AlertTitle>
+                  <AlertTitle>Error de Acceso</AlertTitle>
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="admin@bodega.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="password"

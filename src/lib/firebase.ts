@@ -1,5 +1,6 @@
+// This file is no longer used for authentication but might be in the future.
+// Keeping it to avoid breaking potential future integrations.
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,6 +12,9 @@ const firebaseConfig = {
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
 
-export { app, auth };
+// Note: getAuth is not exported anymore to prevent accidental usage.
+// If you need firebase auth, please re-add `import { getAuth } from "firebase/auth"`
+// and export it.
+
+export { app };
