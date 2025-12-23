@@ -7,10 +7,11 @@ const cigarImage = PlaceHolderImages.find(img => img.id === 'caja-de-cigarros');
 const singleCigarImage = PlaceHolderImages.find(img => img.id === 'cigarrillo-detal');
 const soapImage = PlaceHolderImages.find(img => img.id === 'jabon-de-bano');
 const catalinaImage = PlaceHolderImages.find(img => img.id === 'catalina-unidad');
-const toiletPaperImage = PlaceHolderImages.find(img => img.id === 'papel-higienico');
+const toiletPaperPackImage = PlaceHolderImages.find(img => img.id === 'papel-higienico-paquete');
+const toiletPaperRollImage = PlaceHolderImages.find(img => img.id === 'papel-higienico-rollo');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -101,15 +102,29 @@ export const products: Product[] = [
   },
   {
     id: '8',
-    name: 'Papel Higiénico Caricias',
-    description: 'Paquete de papel higiénico.',
+    name: 'Papel Higiénico Caricias (4 Rollos)',
+    description: 'Paquete de 4 rollos de papel higiénico.',
     priceUSD: 1.3,
     image: {
-      src: toiletPaperImage.imageUrl,
+      src: toiletPaperPackImage.imageUrl,
       alt: 'Paquete de Papel Higiénico Caricias',
       width: 500,
       height: 500,
-      hint: toiletPaperImage.imageHint,
+      hint: toiletPaperPackImage.imageHint,
+    },
+    category: 'Cuidado Personal',
+  },
+    {
+    id: '9',
+    name: 'Papel Higiénico (1 Rollo)',
+    description: 'Un (1) rollo de papel higiénico.',
+    priceUSD: 0.32,
+    image: {
+      src: toiletPaperRollImage.imageUrl,
+      alt: 'Un rollo de papel higiénico',
+      width: 225,
+      height: 225,
+      hint: toiletPaperRollImage.imageHint,
     },
     category: 'Cuidado Personal',
   }

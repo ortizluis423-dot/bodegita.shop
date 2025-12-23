@@ -49,10 +49,16 @@
       "imageHint": "catalina cookie"
     },
     {
-      "id": "papel-higienico",
+      "id": "papel-higienico-paquete",
       "description": "A pack of Caricias toilet paper.",
       "imageUrl": "https://somosdiadema.com/wp-content/uploads/2024/10/CARICIAS-215.webp",
       "imageHint": "toilet paper"
+    },
+    {
+      "id": "papel-higienico-rollo",
+      "description": "A single roll of toilet paper.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTsmRJSjOTKVpI_sg7n5w3tc9B9g7vk86xRw&s",
+      "imageHint": "toilet paper roll"
     }
   ]
 }
