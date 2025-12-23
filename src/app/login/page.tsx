@@ -54,7 +54,7 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-screen bg-muted/40 p-4">
       <Card className="w-full max-w-sm shadow-2xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-headline">cachin</CardTitle>
+          <CardTitle className="text-3xl font-headline">Mercadito Express</CardTitle>
           <CardDescription>Acceso de Administrador</CardDescription>
         </CardHeader>
         <CardContent>

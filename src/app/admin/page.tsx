@@ -54,7 +54,7 @@ export default function AdminPage() {
                 Panel de Administración
               </h1>
               <p className="text-muted-foreground">
-                Gestiona tu tienda cachin.
+                Gestiona tu tienda Mercadito Express.
               </p>
             </div>
             <LogoutButton />
