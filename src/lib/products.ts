@@ -9,9 +9,10 @@ const soapImage = PlaceHolderImages.find(img => img.id === 'jabon-de-bano');
 const catalinaImage = PlaceHolderImages.find(img => img.id === 'catalina-unidad');
 const toiletPaperPackImage = PlaceHolderImages.find(img => img.id === 'papel-higienico-paquete');
 const toiletPaperRollImage = PlaceHolderImages.find(img => img.id === 'papel-higienico-rollo');
+const coffeeImage = PlaceHolderImages.find(img => img.id === 'cafe-granel');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -41,6 +42,20 @@ export const products: Product[] = [
       width: 225,
       height: 225,
       hint: singleEggImage.imageHint,
+    },
+    category: 'Víveres',
+  },
+    {
+    id: '10',
+    name: 'Café en Grano (100g)',
+    description: '100 gramos de café en grano.',
+    priceUSD: 1.35,
+    image: {
+      src: coffeeImage.imageUrl,
+      alt: 'Bolsa de café en grano',
+      width: 400,
+      height: 400,
+      hint: coffeeImage.imageHint,
     },
     category: 'Víveres',
   },

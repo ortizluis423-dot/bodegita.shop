@@ -59,6 +59,12 @@
       "description": "A single roll of toilet paper.",
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTsmRJSjOTKVpI_sg7n5w3tc9B9g7vk86xRw&s",
       "imageHint": "toilet paper roll"
+    },
+    {
+      "id": "cafe-granel",
+      "description": "100g of bulk coffee beans.",
+      "imageUrl": "https://images.unsplash.com/photo-1600093463592-8c76ae2e695c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjb2ZmZWUlMjBiZWFucyUyMGJhZ3xlbnwwfHx8fDE3MTc4NzQ5OTV8MA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "coffee beans"
     }
   ]
 }
