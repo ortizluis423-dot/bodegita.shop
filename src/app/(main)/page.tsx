@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useProducts } from '@/hooks/use-products';
@@ -15,46 +16,44 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="bg-background">
-      <div className="container mx-auto px-4 py-8">
-        <section className="mb-12">
-          <CashAdvanceCard />
-        </section>
+    <>
+      <section className="mb-12">
+        <CashAdvanceCard />
+      </section>
 
-        <Tabs defaultValue="Todos" className="w-full">
-          <div className="flex justify-center mb-8">
-            <TabsList>
-              {categories.map((category) => (
-                <TabsTrigger key={category} value={category}>
-                  {category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
-
-          <TabsContent value="Todos">
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-              {visibleProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </TabsContent>
-
-          {categories
-            .filter((c) => c !== 'Todos')
-            .map((category) => (
-              <TabsContent key={category} value={category}>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-                  {visibleProducts
-                    .filter((p) => p.category === category)
-                    .map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
-              </TabsContent>
+      <Tabs defaultValue="Todos" className="w-full">
+        <div className="flex justify-center mb-8">
+          <TabsList>
+            {categories.map((category) => (
+              <TabsTrigger key={category} value={category}>
+                {category}
+              </TabsTrigger>
             ))}
-        </Tabs>
-      </div>
-    </div>
+          </TabsList>
+        </div>
+
+        <TabsContent value="Todos">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </TabsContent>
+
+        {categories
+          .filter((c) => c !== 'Todos')
+          .map((category) => (
+            <TabsContent key={category} value={category}>
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
+                {visibleProducts
+                  .filter((p) => p.category === category)
+                  .map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+              </div>
+            </TabsContent>
+          ))}
+      </Tabs>
+    </>
   );
 }

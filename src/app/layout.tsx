@@ -2,7 +2,6 @@ import './globals.css';
 import type {Metadata} from 'next';
 import { Playfair_Display, PT_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import { Providers } from '@/components/providers';
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -31,11 +30,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn('font-body antialiased', ptSans.variable, playfairDisplay.variable)}
     >
-      <body>
-        <Providers>
-          {children}
-        </Providers>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
