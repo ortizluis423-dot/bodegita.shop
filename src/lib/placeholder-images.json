@@ -83,6 +83,12 @@
       "description": "A disposable razor blade.",
       "imageUrl": "https://cdn.creazilla.com/cliparts/77368/shaver-clipart-md.png",
       "imageHint": "razor blade"
+    },
+    {
+      "id": "sardina-en-lata",
+      "description": "Canned sardines, 170g.",
+      "imageUrl": "https://triomcbo.com/wp-content/uploads/2023/11/C646-Sardina-Puerto-Alegre-170g.jpg",
+      "imageHint": "canned sardines"
     }
   ]
 }

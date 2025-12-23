@@ -13,9 +13,10 @@ const coffeeImage = PlaceHolderImages.find(img => img.id === 'cafe-granel');
 const nutribelaImage = PlaceHolderImages.find(img => img.id === 'nutribela');
 const slicedBreadImage = PlaceHolderImages.find(img => img.id === 'pan-dulce-rebanado');
 const razorImage = PlaceHolderImages.find(img => img.id === 'cuchilla-de-afeitar');
+const sardineImage = PlaceHolderImages.find(img => img.id === 'sardina-en-lata');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -59,6 +60,20 @@ export const products: Product[] = [
       width: 400,
       height: 400,
       hint: coffeeImage.imageHint,
+    },
+    category: 'Víveres',
+  },
+  {
+    id: '14',
+    name: 'Sardina en Lata',
+    description: 'Sardinas en lata, 170g.',
+    priceUSD: 1.00,
+    image: {
+      src: sardineImage.imageUrl,
+      alt: 'Lata de sardinas',
+      width: 600,
+      height: 600,
+      hint: sardineImage.imageHint,
     },
     category: 'Víveres',
   },

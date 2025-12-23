@@ -93,6 +93,12 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.creazilla.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'triomcbo.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
