@@ -24,7 +24,6 @@ export const ProductContext = createContext<ProductContextType | undefined>(
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     try {
@@ -39,7 +38,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
           }))
         );
       } else {
-        // Set initial visibility to true for all products if no state is stored
         setProducts((prevProducts) =>
           prevProducts.map((p) => ({ ...p, isVisible: true }))
         );
@@ -49,8 +47,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
        setProducts((prevProducts) =>
           prevProducts.map((p) => ({ ...p, isVisible: true }))
         );
-    } finally {
-      setIsLoaded(true);
     }
   }, []);
 
@@ -71,30 +67,30 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const toggleProductVisibility = useCallback((productId: string) => {
-    const newProducts = products.map((p) => {
-      if (p.id === productId) {
-        return { ...p, isVisible: !p.isVisible };
-      }
-      return p;
+    setProducts((currentProducts) => {
+      const newProducts = currentProducts.map((p) => {
+        if (p.id === productId) {
+          return { ...p, isVisible: !p.isVisible };
+        }
+        return p;
+      });
+      saveProductState(newProducts);
+      return newProducts;
     });
-    setProducts(newProducts);
-    saveProductState(newProducts);
-  }, [products]);
+  }, []);
 
   const updateProductPrice = useCallback((productId: string, newPrice: number) => {
-    const newProducts = products.map((p) => {
+    setProducts((currentProducts) => {
+      const newProducts = currentProducts.map((p) => {
         if (p.id === productId) {
           return { ...p, priceUSD: newPrice };
         }
         return p;
       });
-      setProducts(newProducts);
       saveProductState(newProducts);
-  }, [products]);
-  
-  if (!isLoaded) {
-    return null; // Or a loading indicator
-  }
+      return newProducts;
+    });
+  }, []);
 
   return (
     <ProductContext.Provider value={{ products, toggleProductVisibility, updateProductPrice }}>

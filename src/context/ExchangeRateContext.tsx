@@ -22,7 +22,6 @@ export const ExchangeRateContext = createContext<
 
 export const ExchangeRateProvider = ({ children }: { children: ReactNode }) => {
   const [rate, setRateState] = useState(DEFAULT_RATE);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     try {
@@ -32,8 +31,6 @@ export const ExchangeRateProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (e) {
       console.error('Could not access local storage:', e);
-    } finally {
-      setIsLoaded(true);
     }
   }, []);
 
@@ -45,10 +42,6 @@ export const ExchangeRateProvider = ({ children }: { children: ReactNode }) => {
       console.error('Could not access local storage:', e);
     }
   }, []);
-
-  if (!isLoaded) {
-    return null; // Or a loading spinner
-  }
 
   return (
     <ExchangeRateContext.Provider value={{ rate, setRate }}>
