@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -16,6 +17,7 @@ interface ProductContextType {
   products: Product[];
   toggleProductVisibility: (productId: string) => void;
   updateProductPrice: (productId: string, newPrice: number) => void;
+  loading: boolean;
 }
 
 export const ProductContext = createContext<ProductContextType | undefined>(
@@ -23,25 +25,30 @@ export const ProductContext = createContext<ProductContextType | undefined>(
 );
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<Product[]>(() => 
-    initialProducts.map(p => ({ ...p, isVisible: true }))
-  );
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     try {
       const storedState = localStorage.getItem(PRODUCT_STATE_STORAGE_KEY);
+      const baseProducts = initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true }));
+      
       if (storedState) {
         const productState = JSON.parse(storedState);
-        setProducts((prevProducts) =>
-          prevProducts.map((p) => ({
-            ...p,
-            isVisible: productState[p.id]?.isVisible ?? p.isVisible,
-            priceUSD: productState[p.id]?.priceUSD ?? p.priceUSD,
-          }))
-        );
+        const hydratedProducts = baseProducts.map((p) => ({
+          ...p,
+          isVisible: productState[p.id]?.isVisible ?? p.isVisible,
+          priceUSD: productState[p.id]?.priceUSD ?? p.priceUSD,
+        }));
+        setProducts(hydratedProducts);
+      } else {
+        setProducts(baseProducts);
       }
     } catch (e) {
-      console.error('Could not access local storage:', e);
+      console.error('Could not access local storage, using initial products:', e);
+      setProducts(initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true })));
+    } finally {
+       setLoading(false);
     }
   }, []);
 
@@ -88,7 +95,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, toggleProductVisibility, updateProductPrice }}>
+    <ProductContext.Provider value={{ products, toggleProductVisibility, updateProductPrice, loading }}>
       {children}
     </ProductContext.Provider>
   );

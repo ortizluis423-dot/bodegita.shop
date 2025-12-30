@@ -5,9 +5,19 @@ import { useProducts } from '@/hooks/use-products';
 import { ProductCard } from '@/components/product-card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CashAdvanceCard } from '@/components/cash-advance-card';
+import { Loader2 } from 'lucide-react';
 
 export default function HomePage() {
-  const { products: allProducts } = useProducts();
+  const { products: allProducts, loading } = useProducts();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   const visibleProducts = allProducts.filter((p) => p.isVisible);
   
   const categories = [
