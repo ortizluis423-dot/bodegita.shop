@@ -24,18 +24,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // This check now correctly runs only on the client side, after initial render.
+    // This check now correctly runs only on the client side, after initial mount.
     // This prevents hydration mismatches.
+    let isAuth = false;
     try {
       const storedAuth = sessionStorage.getItem(AUTH_STORAGE_KEY);
       if (storedAuth === "true") {
-        setIsAuthenticated(true);
+        isAuth = true;
       }
     } catch (e) {
       console.error("Could not access session storage:", e);
-    } finally {
-      setLoading(false);
     }
+    setIsAuthenticated(isAuth);
+    setLoading(false);
   }, []);
 
   const login = useCallback((password: string) => {

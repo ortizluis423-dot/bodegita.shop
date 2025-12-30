@@ -23,7 +23,9 @@ export const ProductContext = createContext<ProductContextType | undefined>(
 );
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<Product[]>(() => 
+    initialProducts.map(p => ({ ...p, isVisible: true }))
+  );
 
   useEffect(() => {
     try {
@@ -33,20 +35,13 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         setProducts((prevProducts) =>
           prevProducts.map((p) => ({
             ...p,
-            isVisible: productState[p.id]?.isVisible ?? true,
+            isVisible: productState[p.id]?.isVisible ?? p.isVisible,
             priceUSD: productState[p.id]?.priceUSD ?? p.priceUSD,
           }))
-        );
-      } else {
-        setProducts((prevProducts) =>
-          prevProducts.map((p) => ({ ...p, isVisible: true }))
         );
       }
     } catch (e) {
       console.error('Could not access local storage:', e);
-       setProducts((prevProducts) =>
-          prevProducts.map((p) => ({ ...p, isVisible: true }))
-        );
     }
   }, []);
 
