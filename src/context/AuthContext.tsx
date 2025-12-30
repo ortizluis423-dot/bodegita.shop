@@ -4,8 +4,6 @@
 import { createContext, useState, useEffect, ReactNode, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
-// For a real application, this should be stored securely in environment variables.
-// The current password is an improvement for security and professionalism.
 const ADMIN_PASSWORD = "MercaditoAdmin2024";
 const AUTH_STORAGE_KEY = "mercadito_express_auth";
 
@@ -24,19 +22,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // This check now correctly runs only on the client side, after initial mount.
-    // This prevents hydration mismatches.
-    let isAuth = false;
     try {
       const storedAuth = sessionStorage.getItem(AUTH_STORAGE_KEY);
       if (storedAuth === "true") {
-        isAuth = true;
+        setIsAuthenticated(true);
       }
     } catch (e) {
       console.error("Could not access session storage:", e);
+    } finally {
+      setLoading(false);
     }
-    setIsAuthenticated(isAuth);
-    setLoading(false);
   }, []);
 
   const login = useCallback((password: string) => {

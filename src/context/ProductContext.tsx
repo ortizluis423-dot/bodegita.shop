@@ -52,7 +52,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const saveProductState = (updatedProducts: Product[]) => {
+  const saveProductState = useCallback((updatedProducts: Product[]) => {
     try {
        const productState = updatedProducts.reduce((acc, p) => {
         acc[p.id] = { isVisible: p.isVisible, priceUSD: p.priceUSD };
@@ -66,7 +66,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     } catch (e) {
        console.error('Could not access local storage:', e);
     }
-  }
+  }, []);
 
   const toggleProductVisibility = useCallback((productId: string) => {
     setProducts((currentProducts) => {
@@ -79,7 +79,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       saveProductState(newProducts);
       return newProducts;
     });
-  }, []);
+  }, [saveProductState]);
 
   const updateProductPrice = useCallback((productId: string, newPrice: number) => {
     setProducts((currentProducts) => {
@@ -92,7 +92,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       saveProductState(newProducts);
       return newProducts;
     });
-  }, []);
+  }, [saveProductState]);
 
   return (
     <ProductContext.Provider value={{ products, toggleProductVisibility, updateProductPrice, loading }}>
