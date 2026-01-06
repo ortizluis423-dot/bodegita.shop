@@ -11,9 +11,15 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
+  type ChartConfig
 } from '@/components/ui/chart';
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#82ca9d"];
+const barChartConfig = {
+  count: {
+    label: "Productos",
+    color: "hsl(var(--chart-1))",
+  },
+} satisfies ChartConfig
 
 export function AdminDashboard() {
   const { products } = useProducts();
@@ -49,26 +55,26 @@ export function AdminDashboard() {
     return ranges.filter(r => r.count > 0);
   }, [products]);
 
-  const chartConfig = {
-    count: { label: "Productos" },
-  };
-
-  const priceChartConfig = Object.fromEntries(
-    productsByPriceRange.map((range, index) => [
-      range.name,
-      { label: range.name, color: COLORS[index % COLORS.length] },
-    ])
-  );
+ const pieChartConfig = useMemo(() => {
+    const config: ChartConfig = {};
+    productsByPriceRange.forEach((range, index) => {
+      config[range.name] = {
+        label: range.name,
+        color: `hsl(var(--chart-${(index % 5) + 1}))`,
+      };
+    });
+    return config;
+  }, [productsByPriceRange]);
 
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle>Productos por Categoría</CardTitle>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-[250px] w-full">
+          <ChartContainer config={barChartConfig} className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={productsByCategory} margin={{ top: 20, right: 20, left: -10, bottom: 0 }}>
                 <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
@@ -77,7 +83,7 @@ export function AdminDashboard() {
                   cursor={false}
                   content={<ChartTooltipContent indicator="dot" />}
                 />
-                <Bar dataKey="count" fill="var(--color-accent)" radius={4} />
+                <Bar dataKey="count" fill="var(--color-count)" radius={4} />
               </BarChart>
             </ResponsiveContainer>
           </ChartContainer>
@@ -88,9 +94,13 @@ export function AdminDashboard() {
           <CardTitle>Distribución de Precios</CardTitle>
         </CardHeader>
         <CardContent>
-           <ChartContainer config={priceChartConfig} className="h-[250px] w-full">
+           <ChartContainer config={pieChartConfig} className="h-[250px] w-full">
              <ResponsiveContainer width="100%" height="100%">
               <PieChart>
+                 <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
                 <Pie
                   data={productsByPriceRange}
                   dataKey="count"
@@ -99,15 +109,12 @@ export function AdminDashboard() {
                   cy="50%"
                   outerRadius={80}
                   label
+                  labelLine={false}
                 >
-                  {productsByPriceRange.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  {productsByPriceRange.map((entry) => (
+                     <Cell key={`cell-${entry.name}`} fill={pieChartConfig[entry.name]?.color} />
                   ))}
                 </Pie>
-                 <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
-                />
                 <ChartLegend content={<ChartLegendContent />} />
               </PieChart>
             </ResponsiveContainer>
