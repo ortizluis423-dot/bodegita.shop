@@ -7,6 +7,7 @@ import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { CartSheet } from "@/components/cart-sheet";
 import { useCart } from "@/hooks/use-cart";
 import { useMounted } from "@/hooks/use-mounted";
+import { ThemeToggle } from "./theme-toggle";
 
 export function Header() {
   const { cartCount } = useCart();
@@ -38,6 +39,7 @@ export function Header() {
               </SheetContent>
             </Sheet>
           )}
+          <ThemeToggle />
         </div>
       </div>
     </header>
