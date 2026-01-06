@@ -48,49 +48,49 @@ export function CashAdvanceCard() {
   };
 
   return (
-    <Card className="overflow-hidden shadow-sm border-none bg-secondary">
+    <Card className="overflow-hidden shadow-lg border-none bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
       <div className="flex flex-col md:flex-row">
         <div className="flex flex-col flex-grow p-6">
           <CardHeader className="p-0 mb-4">
-            <CardTitle className="font-bold text-xl">
+            <CardTitle className="font-bold text-xl font-headline">
               Avance de Efectivo
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-primary-foreground/80">
               Solicita tu avance con un 10% de recargo.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow space-y-4 p-0">
             <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="cash-amount" className="font-semibold">Monto en Bolívares</Label>
+              <Label htmlFor="cash-amount" className="font-semibold text-primary-foreground/90">Monto en Bolívares</Label>
               <Input
                 type="number"
                 id="cash-amount"
                 placeholder="Ej: 2000.00"
                 value={amountVES || ""}
                 onChange={(e) => setAmountVES(parseFloat(e.target.value) || 0)}
-                className="text-base font-bold bg-background border-border"
+                className="text-base font-bold bg-background/20 text-primary-foreground border-border/50 placeholder:text-primary-foreground/50 focus:bg-background/30"
               />
             </div>
             {amountVES > 0 && (
-              <div className="p-4 bg-background rounded-md text-sm space-y-1">
+              <div className="p-4 bg-background/10 rounded-md text-sm space-y-2 backdrop-blur-sm">
                 <div className="flex justify-between">
-                  <span>Monto a solicitar:</span>
+                  <span className="text-primary-foreground/80">Monto a solicitar:</span>
                   <span className="font-medium">{formatToVES(amountVES)}</span>
                 </div>
                  <div className="flex justify-between">
-                  <span>Equivale a (USD):</span>
+                  <span className="text-primary-foreground/80">Equivale a (USD):</span>
                   <span className="font-medium">{formatToUSD(amountUSD)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Recargo (10%):</span>
+                  <span className="text-primary-foreground/80">Recargo (10%):</span>
                   <span className="font-medium">{formatToUSD(amountUSD * surcharge)}</span>
                 </div>
-                <hr className="my-1 border-border" />
+                <hr className="my-1 border-primary-foreground/20" />
                 <div className="flex justify-between font-bold text-base">
                   <span>Total a pagar:</span>
                   <span>{formatToVES(totalVESToPay)}</span>
                 </div>
-                <div className="flex justify-between text-muted-foreground text-sm">
+                <div className="flex justify-between text-primary-foreground/70 text-sm">
                   <span>Equivalente en USD:</span>
                   <span>{formatToUSD(totalUSDToPay)}</span>
                 </div>
