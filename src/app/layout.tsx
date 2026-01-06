@@ -16,8 +16,8 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Mercadito Express',
-  description: 'Your one-stop online shop.',
+  title: 'Bodeguita',
+  description: 'Tu bodeguita de confianza, en línea.',
 };
 
 export default function RootLayout({

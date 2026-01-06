@@ -6,7 +6,7 @@ import { useCart } from "@/hooks/use-cart";
 import { useExchangeRate } from "@/hooks/use-exchange-rate";
 import { formatToUSD, formatToVES } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useMemo } from "react";
 
 interface ProductCardProps {
@@ -49,7 +49,7 @@ export function ProductCard({ product }: ProductCardProps) {
          e.preventDefault();
          addToCart(product)
         }}>
-          <ShoppingCart className="mr-2 h-4 w-4" /> Añadir
+          <Sparkles className="mr-2 h-4 w-4" /> Añadir
         </Button>
     </div>
   );
