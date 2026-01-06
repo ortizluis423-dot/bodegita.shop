@@ -23,17 +23,13 @@ import { Button } from '@/components/ui/button';
 import { LogoutButton } from '@/components/logout-button';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { useAuth } from '@/hooks/use-auth';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import AuthGuard from '@/components/auth-guard';
 import { ExchangeRateAdmin } from '@/components/exchange-rate-admin';
 import { useToast } from '@/hooks/use-toast';
+import { AdminDashboard } from '@/components/admin-dashboard';
 
 export default function AdminPage() {
   const { products, toggleProductVisibility, updateProductPrice, loading: productsLoading } = useProducts();
-  const { isAuthenticated } = useAuth();
-  const router = useRouter();
   const { toast } = useToast();
 
   const handlePriceChange = (productId: string, newPrice: number) => {
@@ -52,22 +48,11 @@ export default function AdminPage() {
     });
   };
 
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
-
-  if (!isAuthenticated) {
-    return null; 
-  }
-
   return (
     <AuthGuard>
       <div className="min-h-screen bg-muted/40">
         <div className="container mx-auto p-4 sm:p-8">
-          <header className="flex justify-between items-center mb-8">
+          <header className="flex justify-between items-start mb-8">
             <div>
               <h1 className="text-3xl font-bold font-headline">
                 Panel de Administración
@@ -78,6 +63,10 @@ export default function AdminPage() {
             </div>
             <LogoutButton />
           </header>
+
+          <div className="grid gap-8 mb-8">
+             <AdminDashboard />
+          </div>
 
           <div className="grid gap-8 md:grid-cols-3">
             <div className="md:col-span-1">
