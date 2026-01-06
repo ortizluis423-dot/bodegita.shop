@@ -29,6 +29,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     try {
       const storedState = localStorage.getItem(PRODUCT_STATE_STORAGE_KEY);
       const baseProducts = initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true }));
@@ -39,7 +40,11 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
           ...p,
           isVisible: productState[p.id]?.isVisible ?? p.isVisible,
           priceUSD: productState[p.id]?.priceUSD ?? p.priceUSD,
-        }));
+        })).sort((a, b) => {
+            const initialIndexA = initialProducts.findIndex(p => p.id === a.id);
+            const initialIndexB = initialProducts.findIndex(p => p.id === b.id);
+            return initialIndexA - initialIndexB;
+        });
         setProducts(hydratedProducts);
       } else {
         setProducts(baseProducts);

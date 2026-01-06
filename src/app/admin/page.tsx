@@ -24,15 +24,34 @@ import { LogoutButton } from '@/components/logout-button';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/hooks/use-auth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AuthGuard from '@/components/auth-guard';
 import { ExchangeRateAdmin } from '@/components/exchange-rate-admin';
+import { useToast } from '@/hooks/use-toast';
 
 export default function AdminPage() {
   const { products, toggleProductVisibility, updateProductPrice, loading: productsLoading } = useProducts();
   const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const { toast } = useToast();
+
+  const handlePriceChange = (productId: string, newPrice: number) => {
+    updateProductPrice(productId, newPrice);
+    toast({
+      title: "Precio Actualizado",
+      description: `El precio del producto se ha guardado.`,
+    });
+  };
+
+  const handleVisibilityToggle = (productId: string) => {
+    toggleProductVisibility(productId);
+    toast({
+      title: "Visibilidad Cambiada",
+      description: `El estado del producto ha sido actualizado.`,
+    });
+  };
+
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -85,7 +104,7 @@ export default function AdminPage() {
                           <TableRow>
                             <TableHead className="w-[80px]">Imagen</TableHead>
                             <TableHead>Nombre</TableHead>
-                            <TableHead className="w-[120px]">Precio (USD)</TableHead>
+                            <TableHead className="w-[150px]">Precio (USD)</TableHead>
                             <TableHead>Estado</TableHead>
                             <TableHead className="text-right">Acción</TableHead>
                           </TableRow>
@@ -109,8 +128,8 @@ export default function AdminPage() {
                               <TableCell>
                                 <Input
                                   type="number"
-                                  value={product.priceUSD}
-                                  onChange={(e) => updateProductPrice(product.id, parseFloat(e.target.value) || 0)}
+                                  defaultValue={product.priceUSD}
+                                  onBlur={(e) => handlePriceChange(product.id, parseFloat(e.target.value) || 0)}
                                   step="0.01"
                                   className="h-9"
                                 />
@@ -130,7 +149,7 @@ export default function AdminPage() {
                                   variant="outline"
                                   size="icon"
                                   onClick={() =>
-                                    toggleProductVisibility(product.id)
+                                    handleVisibilityToggle(product.id)
                                   }
                                 >
                                   {product.isVisible ? (
