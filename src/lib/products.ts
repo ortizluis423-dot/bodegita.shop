@@ -17,13 +17,28 @@ const sardineImage = PlaceHolderImages.find(img => img.id === 'sardina-en-lata')
 const detergentImage = PlaceHolderImages.find(img => img.id === 'detergente-oso-blanco');
 const glupImage = PlaceHolderImages.find(img => img.id === 'glup-chinoto-2l');
 const glupColitaImage = PlaceHolderImages.find(img => img.id === 'glup-colita-2l');
+const cartonDeHuevosImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage || !cartonDeHuevosImage) {
   throw new Error('Placeholder images not found');
 }
 
 export const products: Product[] = [
+  {
+    id: '1',
+    name: 'Cartón de Huevos',
+    description: '30 unidades de huevos frescos.',
+    priceUSD: 7.00,
+    image: {
+      src: cartonDeHuevosImage.imageUrl,
+      alt: 'Cartón de 30 huevos',
+      width: 600,
+      height: 400,
+      hint: cartonDeHuevosImage.imageHint,
+    },
+    category: 'Víveres',
+  },
   {
     id: '2',
     name: 'Medio Cartón de Huevos',
