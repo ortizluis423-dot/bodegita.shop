@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from "react";
@@ -18,7 +19,7 @@ import { Send } from "lucide-react";
 
 export function CashAdvanceCard() {
   const [amountVES, setAmountVES] = useState(0);
-  const { rate } = useExchangeRate();
+  const { rate, loading: rateLoading } = useExchangeRate();
   const phoneNumber = "584122877326";
   const surcharge = 0.1; // 10%
 
@@ -31,7 +32,7 @@ export function CashAdvanceCard() {
 
 
   const handleWhatsAppRequest = () => {
-    if (amountVES <= 0) {
+    if (amountVES <= 0 || rateLoading) {
       alert("Por favor, ingrese un monto válido.");
       return;
     }
@@ -56,7 +57,7 @@ export function CashAdvanceCard() {
               Avance de Efectivo
             </CardTitle>
             <CardDescription className="text-primary-foreground/80">
-              Solicita tu avance con un 10% de recargo.
+              Solicita tu avance con un 10% de recargo. Tasa del día: {rateLoading ? 'cargando...' : `${rate} Bs./USD`}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow space-y-4 p-0">
@@ -71,7 +72,7 @@ export function CashAdvanceCard() {
                 className="text-base font-bold bg-background/20 text-primary-foreground border-border/50 placeholder:text-primary-foreground/50 focus:bg-background/30"
               />
             </div>
-            {amountVES > 0 && (
+            {amountVES > 0 && !rateLoading && (
               <div className="p-4 bg-background/10 rounded-md text-sm space-y-2 backdrop-blur-sm">
                 <div className="flex justify-between">
                   <span className="text-primary-foreground/80">Monto a solicitar:</span>
@@ -101,7 +102,7 @@ export function CashAdvanceCard() {
             <Button
               className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
               onClick={handleWhatsAppRequest}
-              disabled={amountVES <= 0}
+              disabled={amountVES <= 0 || rateLoading}
             >
               <Send className="mr-2 h-4 w-4" />
               Solicitar por WhatsApp

@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -25,7 +26,7 @@ export function CartSheet() {
     clearCart,
     totalPriceUSD,
   } = useCart();
-  const { rate } = useExchangeRate();
+  const { rate, loading: rateLoading } = useExchangeRate();
   const firestore = useFirestore();
 
   const totalPriceVES = useMemo(
@@ -35,7 +36,7 @@ export function CartSheet() {
   const phoneNumber = '584122877326';
 
   const handleWhatsAppCheckout = async () => {
-    if (!firestore) return;
+    if (!firestore || rateLoading) return;
 
     const message = generateWhatsAppCheckoutMessage(
       cartItems,
@@ -141,15 +142,13 @@ export function CartSheet() {
                 <span>Total:</span>
                 <div className="text-right">
                   <p>{formatToUSD(totalPriceUSD)}</p>
-                  <p className="text-base text-muted-foreground">
-                    {formatToVES(totalPriceVES)}
-                  </p>
+                  { !rateLoading && rate > 0 && <p className="text-base text-muted-foreground">{formatToVES(totalPriceVES)}</p> }
                 </div>
               </div>
               <Button
                 className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
                 onClick={handleWhatsAppCheckout}
-                disabled={!firestore}
+                disabled={!firestore || rateLoading}
               >
                 <Send className="mr-2 h-4 w-4" />
                 Realizar Pedido por WhatsApp

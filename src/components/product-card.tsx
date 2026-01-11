@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -15,7 +16,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
-  const { rate } = useExchangeRate();
+  const { rate, loading: rateLoading } = useExchangeRate();
 
   const priceVES = useMemo(() => product.priceUSD * rate, [product.priceUSD, rate]);
 
@@ -33,7 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
         />
          <div className="absolute bottom-2 right-2 flex flex-col items-end">
           <p className="text-lg font-bold text-background bg-foreground/80 px-2 py-0.5 rounded-md backdrop-blur-sm">{formatToUSD(product.priceUSD)}</p>
-          <p className="text-xs text-background bg-foreground/60 px-2 py-0.5 rounded-md backdrop-blur-sm mt-1">{formatToVES(priceVES)}</p>
+           { !rateLoading && rate > 0 && <p className="text-xs text-background bg-foreground/60 px-2 py-0.5 rounded-md backdrop-blur-sm mt-1">{formatToVES(priceVES)}</p> }
         </div>
       </div>
       <div className="mt-4 flex flex-col flex-grow">
