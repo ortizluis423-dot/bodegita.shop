@@ -46,15 +46,12 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       let hydratedProducts: Product[];
       if (storedState) {
         const productState = JSON.parse(storedState);
+        // Ensure the order of initialProducts is respected
         hydratedProducts = baseProducts.map((p) => ({
           ...p,
           isVisible: productState[p.id]?.isVisible ?? p.isVisible,
           priceUSD: productState[p.id]?.priceUSD ?? p.priceUSD,
-        })).sort((a, b) => {
-            const initialIndexA = initialProducts.findIndex(p => p.id === a.id);
-            const initialIndexB = initialProducts.findIndex(p => p.id === b.id);
-            return initialIndexA - initialIndexB;
-        });
+        }));
       } else {
         hydratedProducts = baseProducts;
       }
