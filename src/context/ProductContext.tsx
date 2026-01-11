@@ -32,21 +32,21 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   // Re-calculate prices when rate changes
   useEffect(() => {
-    // This just forces a re-render of components using the product context.
-    setProducts(currentProducts => [...currentProducts]);
-  }, [rate]);
+     if (!loading) {
+      setProducts(currentProducts => [...currentProducts]);
+    }
+  }, [rate, loading]);
 
   // Load initial products from localStorage on the client side
   useEffect(() => {
     setLoading(true);
+    let hydratedProducts: Product[];
     try {
       const storedState = localStorage.getItem(PRODUCT_STATE_STORAGE_KEY);
       const baseProducts = initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true }));
       
-      let hydratedProducts: Product[];
       if (storedState) {
         const productState = JSON.parse(storedState);
-        // Ensure the order of initialProducts is respected
         hydratedProducts = baseProducts.map((p) => ({
           ...p,
           isVisible: productState[p.id]?.isVisible ?? p.isVisible,
@@ -55,13 +55,12 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       } else {
         hydratedProducts = baseProducts;
       }
-      setProducts(hydratedProducts);
     } catch (e) {
       console.error('Could not access local storage, using initial products:', e);
-      setProducts(initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true })));
-    } finally {
-       setLoading(false);
+      hydratedProducts = initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true }));
     }
+    setProducts(hydratedProducts);
+    setLoading(false);
   }, []);
 
   const saveProductState = useCallback((updatedProducts: Product[]) => {
