@@ -10,6 +10,7 @@ import {
 } from 'react';
 import type { Product } from '@/lib/types';
 import { products as initialProducts } from '@/lib/products';
+import { useExchangeRate } from '@/hooks/use-exchange-rate';
 
 const PRODUCT_STATE_STORAGE_KEY = 'bodega_product_state';
 
@@ -27,6 +28,16 @@ export const ProductContext = createContext<ProductContextType | undefined>(
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { rate } = useExchangeRate(); // Hook into the exchange rate
+
+  // Effect to re-calculate prices when rate changes
+  useEffect(() => {
+    // This just forces a re-render of components using the product context,
+    // they will get the new rate from useExchangeRate hook.
+    // A dummy state update can trigger this.
+    setProducts(currentProducts => [...currentProducts]);
+  }, [rate]);
+
 
   useEffect(() => {
     setLoading(true);

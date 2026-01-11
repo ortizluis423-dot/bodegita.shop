@@ -6,6 +6,7 @@ import { CartProvider } from '@/context/CartContext';
 import { ExchangeRateProvider } from '@/context/ExchangeRateContext';
 import { ProductProvider } from '@/context/ProductContext';
 import { Toaster } from './ui/toaster';
+import { FirebaseProvider } from '@/context/FirebaseContext';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -15,16 +16,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <AuthProvider>
-        <ExchangeRateProvider>
-          <ProductProvider>
-            <CartProvider>
-              {children}
-              <Toaster />
-            </CartProvider>
-          </ProductProvider>
-        </ExchangeRateProvider>
-      </AuthProvider>
+      <FirebaseProvider>
+        <AuthProvider>
+          <ExchangeRateProvider>
+            <ProductProvider>
+              <CartProvider>
+                {children}
+                <Toaster />
+              </CartProvider>
+            </ProductProvider>
+          </ExchangeRateProvider>
+        </AuthProvider>
+      </FirebaseProvider>
     </ThemeProvider>
   );
 }

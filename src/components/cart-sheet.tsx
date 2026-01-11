@@ -14,24 +14,61 @@ import { SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Minus, Plus, Trash2, ShoppingCart, Send } from 'lucide-react';
-import { format } from 'date-fns';
+import { useFirestore } from '@/hooks/use-firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 export function CartSheet() {
-  const { cartItems, updateQuantity, removeFromCart, clearCart, totalPriceUSD } =
-    useCart();
+  const {
+    cartItems,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    totalPriceUSD,
+  } = useCart();
   const { rate } = useExchangeRate();
+  const firestore = useFirestore();
 
-  const totalPriceVES = useMemo(() => totalPriceUSD * rate, [totalPriceUSD, rate]);
+  const totalPriceVES = useMemo(
+    () => totalPriceUSD * rate,
+    [totalPriceUSD, rate]
+  );
   const phoneNumber = '584122877326';
 
-  const handleWhatsAppCheckout = () => {
+  const handleWhatsAppCheckout = async () => {
+    if (!firestore) return;
+
     const message = generateWhatsAppCheckoutMessage(
       cartItems,
       totalPriceUSD,
       totalPriceVES,
       rate
     );
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+    // 1. Save order to Firestore
+    try {
+      const ordersCollection = collection(firestore, 'orders');
+      await addDoc(ordersCollection, {
+        createdAt: serverTimestamp(),
+        items: cartItems.map((item) => ({
+          id: item.id,
+          name: item.name,
+          quantity: item.quantity,
+          priceUSD: item.priceUSD,
+        })),
+        totalPriceUSD,
+        totalPriceVES,
+        exchangeRate: rate,
+      });
+      // Optionally clear cart after saving, or after sending message
+    } catch (error) {
+      console.error('Error saving order to Firestore:', error);
+      // Optionally, show an error message to the user
+    }
+
+    // 2. Open WhatsApp
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -109,7 +146,11 @@ export function CartSheet() {
                   </p>
                 </div>
               </div>
-              <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90" onClick={handleWhatsAppCheckout}>
+              <Button
+                className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+                onClick={handleWhatsAppCheckout}
+                disabled={!firestore}
+              >
                 <Send className="mr-2 h-4 w-4" />
                 Realizar Pedido por WhatsApp
               </Button>
@@ -128,7 +169,9 @@ export function CartSheet() {
         <div className="flex h-full flex-col items-center justify-center text-center">
           <ShoppingCart className="mb-4 h-16 w-16 text-muted-foreground" />
           <p className="text-lg font-semibold">Tu carrito está vacío</p>
-          <p className="text-muted-foreground">¡Añade productos para empezar!</p>
+          <p className="text-muted-foreground">
+            ¡Añade productos para empezar!
+          </p>
         </div>
       )}
     </>
