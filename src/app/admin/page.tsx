@@ -27,6 +27,103 @@ import AuthGuard from '@/components/auth-guard';
 import { ExchangeRateAdmin } from '@/components/exchange-rate-admin';
 import { useToast } from '@/hooks/use-toast';
 import { AdminDashboard } from '@/components/admin-dashboard';
+import { Product } from '@/lib/types';
+
+function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: Product, onPriceChange: (id: string, price: number) => void, onVisibilityToggle: (id: string) => void }) {
+  return (
+    <>
+      {/* Desktop View */}
+      <TableRow className="hidden md:table-row">
+        <TableCell>
+          <Image
+            src={product.image.src}
+            alt={product.image.alt}
+            width={50}
+            height={50}
+            className="rounded-md object-cover"
+            data-ai-hint={product.image.hint}
+          />
+        </TableCell>
+        <TableCell className="font-medium">{product.name}</TableCell>
+        <TableCell>
+          <Input
+            type="number"
+            defaultValue={product.priceUSD}
+            onBlur={(e) => onPriceChange(product.id, parseFloat(e.target.value) || 0)}
+            step="0.01"
+            className="h-9 w-[120px]"
+          />
+        </TableCell>
+        <TableCell>
+          <Badge
+            variant={product.isVisible ? 'default' : 'destructive'}
+            className="bg-green-500 text-white data-[variant=destructive]:bg-red-500"
+          >
+            {product.isVisible ? 'Visible' : 'Oculto'}
+          </Badge>
+        </TableCell>
+        <TableCell className="text-right">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => onVisibilityToggle(product.id)}
+          >
+            {product.isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            <span className="sr-only">Cambiar visibilidad</span>
+          </Button>
+        </TableCell>
+      </TableRow>
+
+      {/* Mobile View */}
+      <TableRow className="md:hidden">
+        <TableCell colSpan={5} className="p-0">
+          <div className="flex items-start gap-4 p-4">
+             <Image
+                src={product.image.src}
+                alt={product.image.alt}
+                width={60}
+                height={60}
+                className="rounded-md object-cover"
+                data-ai-hint={product.image.hint}
+              />
+            <div className="flex-grow space-y-2">
+              <p className="font-bold">{product.name}</p>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Precio:</span>
+                <Input
+                  type="number"
+                  defaultValue={product.priceUSD}
+                  onBlur={(e) => onPriceChange(product.id, parseFloat(e.target.value) || 0)}
+                  step="0.01"
+                  className="h-9 w-28"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                 <span className="text-sm text-muted-foreground">Estado:</span>
+                <Badge
+                  variant={product.isVisible ? 'default' : 'destructive'}
+                  className="bg-green-500 text-white data-[variant=destructive]:bg-red-500"
+                >
+                  {product.isVisible ? 'Visible' : 'Oculto'}
+                </Badge>
+              </div>
+            </div>
+            <Button
+                variant="outline"
+                size="icon"
+                onClick={() => onVisibilityToggle(product.id)}
+                className="shrink-0"
+              >
+                {product.isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                <span className="sr-only">Cambiar visibilidad</span>
+              </Button>
+          </div>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+}
+
 
 export default function AdminPage() {
   const { products, toggleProductVisibility, updateProductPrice, loading: productsLoading } = useProducts();
@@ -89,69 +186,23 @@ export default function AdminPage() {
                   ) : (
                     <div className="border rounded-lg overflow-hidden">
                       <Table>
-                        <TableHeader>
+                        <TableHeader className="hidden md:table-header-group">
                           <TableRow>
                             <TableHead className="w-[80px]">Imagen</TableHead>
                             <TableHead>Nombre</TableHead>
-                            <TableHead className="w-[150px]">Precio (USD)</TableHead>
+                            <TableHead>Precio (USD)</TableHead>
                             <TableHead>Estado</TableHead>
                             <TableHead className="text-right">Acción</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {products.map((product) => (
-                            <TableRow key={product.id}>
-                              <TableCell>
-                                <Image
-                                  src={product.image.src}
-                                  alt={product.image.alt}
-                                  width={50}
-                                  height={50}
-                                  className="rounded-md object-cover"
-                                  data-ai-hint={product.image.hint}
-                                />
-                              </TableCell>
-                              <TableCell className="font-medium">
-                                {product.name}
-                              </TableCell>
-                              <TableCell>
-                                <Input
-                                  type="number"
-                                  defaultValue={product.priceUSD}
-                                  onBlur={(e) => handlePriceChange(product.id, parseFloat(e.target.value) || 0)}
-                                  step="0.01"
-                                  className="h-9"
-                                />
-                              </TableCell>
-                              <TableCell>
-                                <Badge
-                                  variant={
-                                    product.isVisible ? 'default' : 'destructive'
-                                  }
-                                  className="bg-green-500 text-white data-[variant=destructive]:bg-red-500"
-                                >
-                                  {product.isVisible ? 'Visible' : 'Oculto'}
-                                </Badge>
-                              </TableCell>
-                              <TableCell className="text-right">
-                                <Button
-                                  variant="outline"
-                                  size="icon"
-                                  onClick={() =>
-                                    handleVisibilityToggle(product.id)
-                                  }
-                                >
-                                  {product.isVisible ? (
-                                    <EyeOff className="h-4 w-4" />
-                                  ) : (
-                                    <Eye className="h-4 w-4" />
-                                  )}
-                                  <span className="sr-only">
-                                    Cambiar visibilidad
-                                  </span>
-                                </Button>
-                              </TableCell>
-                            </TableRow>
+                           {products.map((product) => (
+                            <ProductRow 
+                              key={product.id}
+                              product={product}
+                              onPriceChange={handlePriceChange}
+                              onVisibilityToggle={handleVisibilityToggle}
+                            />
                           ))}
                         </TableBody>
                       </Table>

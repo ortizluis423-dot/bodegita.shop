@@ -6,9 +6,17 @@ import { ProductCard } from '@/components/product-card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CashAdvanceCard } from '@/components/cash-advance-card';
 import { Loader2 } from 'lucide-react';
+import { useMemo } from 'react';
 
 export default function HomePage() {
   const { products: allProducts, loading } = useProducts();
+
+  const visibleProducts = useMemo(() => allProducts.filter((p) => p.isVisible), [allProducts]);
+  
+  const categories = useMemo(() => [
+    'Todos',
+    ...Array.from(new Set(visibleProducts.map((p) => p.category))),
+  ], [visibleProducts]);
 
   if (loading) {
     return (
@@ -18,13 +26,6 @@ export default function HomePage() {
     );
   }
 
-  const visibleProducts = allProducts.filter((p) => p.isVisible);
-  
-  const categories = [
-    'Todos',
-    ...Array.from(new Set(visibleProducts.map((p) => p.category))),
-  ];
-
   return (
     <>
       <section className="mb-12">
@@ -33,9 +34,9 @@ export default function HomePage() {
 
       <Tabs defaultValue="Todos" className="w-full">
         <div className="flex justify-center mb-8">
-          <TabsList>
+          <TabsList className="flex-wrap h-auto">
             {categories.map((category) => (
-              <TabsTrigger key={category} value={category}>
+              <TabsTrigger key={category} value={category} className="flex-shrink-0">
                 {category}
               </TabsTrigger>
             ))}
