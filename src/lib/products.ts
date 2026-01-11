@@ -18,9 +18,10 @@ const detergentImage = PlaceHolderImages.find(img => img.id === 'detergente-oso-
 const glupImage = PlaceHolderImages.find(img => img.id === 'glup-chinoto-2l');
 const glupColitaImage = PlaceHolderImages.find(img => img.id === 'glup-colita-2l');
 const cartonDeHuevosImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
+const salRubiImage = PlaceHolderImages.find(img => img.id === 'sal-rubi-500g');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage || !cartonDeHuevosImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage || !cartonDeHuevosImage || !salRubiImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -92,6 +93,20 @@ export const products: Product[] = [
       width: 600,
       height: 600,
       hint: sardineImage.imageHint,
+    },
+    category: 'Víveres',
+  },
+  {
+    id: '18',
+    name: 'Sal Refinada Rubi 500g',
+    description: 'Bolsa de sal refinada de 500 gramos.',
+    priceUSD: 0.25,
+    image: {
+      src: salRubiImage.imageUrl,
+      alt: 'Sal Refinada Rubi 500g',
+      width: 500,
+      height: 500,
+      hint: salRubiImage.imageHint,
     },
     category: 'Víveres',
   },

@@ -107,6 +107,12 @@
       "description": "A 2-liter bottle of Glup colita soda.",
       "imageUrl": "https://assets.tuzonamarket.com/images/producto/CmxsYbM3BO.jpg",
       "imageHint": "soda bottle"
+    },
+    {
+      "id": "sal-rubi-500g",
+      "description": "Bolsa de Sal Refinada Rubi de 500g.",
+      "imageUrl": "https://assets.tuzonamarket.com/images/producto/pgKLEjnjIQ.jpg",
+      "imageHint": "salt bag"
     }
   ]
 }
