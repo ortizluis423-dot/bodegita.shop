@@ -31,10 +31,13 @@ import { Product } from '@/lib/types';
 import { useState } from 'react';
 
 function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: Product, onPriceChange: (id: string, price: number) => void, onVisibilityToggle: (id: string) => void }) {
-  const [price, setPrice] = useState(product.priceUSD);
+  const [price, setPrice] = useState(product.priceUSD.toString());
 
   const handlePriceBlur = () => {
-    onPriceChange(product.id, price);
+    const newPrice = parseFloat(price);
+    if (!isNaN(newPrice) && newPrice !== product.priceUSD) {
+      onPriceChange(product.id, newPrice);
+    }
   };
   
   return (
@@ -56,7 +59,7 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
           <Input
             type="number"
             value={price}
-            onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
+            onChange={(e) => setPrice(e.target.value)}
             onBlur={handlePriceBlur}
             step="0.01"
             className="h-9 w-[120px]"
@@ -101,7 +104,7 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
                 <Input
                   type="number"
                   value={price}
-                  onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
+                  onChange={(e) => setPrice(e.target.value)}
                   onBlur={handlePriceBlur}
                   step="0.01"
                   className="h-9 w-28"

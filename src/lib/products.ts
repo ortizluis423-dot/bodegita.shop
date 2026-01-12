@@ -51,8 +51,8 @@ export const products: Product[] = [
     image: {
       src: halfEggImage.imageUrl,
       alt: 'Medio cartón de 15 huevos',
-      width: 400,
-      height: 300,
+      width: 600,
+      height: 400,
       hint: halfEggImage.imageHint,
     },
     category: 'Víveres',
@@ -163,8 +163,8 @@ export const products: Product[] = [
     image: {
       src: cigarImage.imageUrl,
       alt: 'Caja de cigarros marca Sahara',
-      width: 400,
-      height: 300,
+      width: 960,
+      height: 720,
       hint: cigarImage.imageHint,
     },
     category: 'Cigarrillos',
@@ -177,8 +177,8 @@ export const products: Product[] = [
     image: {
       src: singleCigarImage.imageUrl,
       alt: 'Un cigarrillo individual',
-      width: 400,
-      height: 300,
+      width: 1200,
+      height: 675,
       hint: singleCigarImage.imageHint,
     },
     category: 'Cigarrillos',
@@ -303,8 +303,8 @@ export const products: Product[] = [
     image: {
       src: catalinaImage.imageUrl,
       alt: 'Una catalina o paledonia',
-      width: 400,
-      height: 300,
+      width: 800,
+      height: 533,
       hint: catalinaImage.imageHint,
     },
     category: 'Panadería',
