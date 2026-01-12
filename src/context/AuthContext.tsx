@@ -4,7 +4,7 @@
 import { createContext, useState, useEffect, ReactNode, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
-const ADMIN_PASSWORD = "MercaditoAdmin2024";
+const ADMIN_PASSWORD = "cazaputas32";
 const AUTH_STORAGE_KEY = "mercadito_express_auth";
 
 interface AuthContextType {
