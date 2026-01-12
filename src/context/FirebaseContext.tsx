@@ -16,6 +16,25 @@ export const FirebaseContext = createContext<FirebaseContextType | undefined>(
   undefined
 );
 
+// Helper function to validate environment variables
+const validateFirebaseConfig = (config: any) => {
+  const requiredKeys = [
+    'apiKey', 
+    'authDomain', 
+    'projectId', 
+    'storageBucket', 
+    'messagingSenderId', 
+    'appId'
+  ];
+  const missingKeys = requiredKeys.filter(key => !config[key]);
+  if (missingKeys.length > 0) {
+    console.error(`Firebase config is missing or invalid: ${missingKeys.join(', ')}. Make sure your .env.local file is correct and Netlify environment variables are set.`);
+    return false;
+  }
+  return true;
+};
+
+
 export const FirebaseProvider = ({ children }: { children: ReactNode }) => {
   const [firebase, setFirebase] = useState<FirebaseContextType>({
     app: null,
@@ -24,8 +43,6 @@ export const FirebaseProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    // Your web app's Firebase configuration
-    // IMPORTANT: Replace with your actual Firebase config
     const firebaseConfig = {
       apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
       authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -35,7 +52,8 @@ export const FirebaseProvider = ({ children }: { children: ReactNode }) => {
       appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     };
     
-    if (typeof window !== "undefined") {
+    // Initialize Firebase only in the browser and if config is valid
+    if (typeof window !== "undefined" && validateFirebaseConfig(firebaseConfig)) {
       const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
       const firestore = getFirestore(app);
       const auth = getAuth(app);
