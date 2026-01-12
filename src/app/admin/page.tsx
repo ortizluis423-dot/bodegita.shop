@@ -28,8 +28,15 @@ import { ExchangeRateAdmin } from '@/components/exchange-rate-admin';
 import { useToast } from '@/hooks/use-toast';
 import { AdminDashboard } from '@/components/admin-dashboard';
 import { Product } from '@/lib/types';
+import { useState } from 'react';
 
 function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: Product, onPriceChange: (id: string, price: number) => void, onVisibilityToggle: (id: string) => void }) {
+  const [price, setPrice] = useState(product.priceUSD);
+
+  const handlePriceBlur = () => {
+    onPriceChange(product.id, price);
+  };
+  
   return (
     <>
       {/* Desktop View */}
@@ -48,8 +55,9 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
         <TableCell>
           <Input
             type="number"
-            defaultValue={product.priceUSD}
-            onBlur={(e) => onPriceChange(product.id, parseFloat(e.target.value) || 0)}
+            value={price}
+            onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
+            onBlur={handlePriceBlur}
             step="0.01"
             className="h-9 w-[120px]"
           />
@@ -92,8 +100,9 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
                 <span className="text-sm text-muted-foreground">Precio:</span>
                 <Input
                   type="number"
-                  defaultValue={product.priceUSD}
-                  onBlur={(e) => onPriceChange(product.id, parseFloat(e.target.value) || 0)}
+                  value={price}
+                  onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
+                  onBlur={handlePriceBlur}
                   step="0.01"
                   className="h-9 w-28"
                 />
