@@ -9,15 +9,15 @@ import {
   useCallback,
 } from 'react';
 import { useFirestore } from '@/hooks/use-firestore';
-import { collection, doc, getDocs, onSnapshot, writeBatch, updateDoc } from 'firebase/firestore';
+import { collection, doc, onSnapshot, writeBatch, updateDoc } from 'firebase/firestore';
 import type { Product } from '@/lib/types';
 import { products as initialProducts } from '@/lib/products';
 
 interface ProductContextType {
   products: Product[];
-  toggleProductVisibility: (productId: string) => void;
-  updateProductPrice: (productId: string, newPrice: number) => void;
   loading: boolean;
+  toggleProductVisibility: (productId: string) => Promise<void>;
+  updateProductPrice: (productId: string, newPrice: number) => Promise<void>;
 }
 
 export const ProductContext = createContext<ProductContextType | undefined>(
@@ -32,35 +32,49 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const firestore = useFirestore();
 
   useEffect(() => {
-    if (!firestore) return;
+    if (!firestore) {
+        setLoading(false);
+        return;
+    };
 
-    setLoading(true);
     const productsCollectionRef = collection(firestore, PRODUCTS_COLLECTION);
     
     const unsubscribe = onSnapshot(productsCollectionRef, async (querySnapshot) => {
       if (querySnapshot.empty) {
+        setLoading(true);
         console.log("Products collection is empty. Initializing with default products...");
-        const batch = writeBatch(firestore);
-        initialProducts.forEach(product => {
-          const docRef = doc(firestore, PRODUCTS_COLLECTION, product.id);
-          batch.set(docRef, { ...product, isVisible: product.isVisible ?? true });
-        });
-        await batch.commit();
+        try {
+            const batch = writeBatch(firestore);
+            initialProducts.forEach(product => {
+              const docRef = doc(firestore, PRODUCTS_COLLECTION, product.id);
+              batch.set(docRef, { 
+                ...product, 
+                isVisible: product.isVisible === undefined ? true : product.isVisible 
+              });
+            });
+            await batch.commit();
+            // After commit, the snapshot listener will be triggered again with the new data
+        } catch (error) {
+            console.error("Error initializing products:", error);
+            setProducts(initialProducts); // fallback to local
+            setLoading(false);
+        }
       } else {
         const productsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
         
+        // Sort based on the order in the local `initialProducts` file for consistency
         productsData.sort((a, b) => {
           const aIndex = initialProducts.findIndex(p => p.id === a.id);
           const bIndex = initialProducts.findIndex(p => p.id === b.id);
-          // If a product is not in initialProducts, place it at the end.
-          if (aIndex === -1) return 1;
-          if (bIndex === -1) return -1;
+          if (aIndex === -1 && bIndex === -1) return 0; // both not in initial list
+          if (aIndex === -1) return 1; // a is not in the list, goes to end
+          if (bIndex === -1) return -1; // b is not in the list, goes to end
           return aIndex - bIndex;
         });
 
         setProducts(productsData);
+        setLoading(false);
       }
-      setLoading(false);
     }, (error) => {
       console.error("Error fetching products from Firestore:", error);
       setProducts(initialProducts); 
@@ -72,9 +86,12 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
 
   const toggleProductVisibility = useCallback(async (productId: string) => {
-    const product = products.find(p => p.id === productId);
-    if (!product || !firestore) return;
+    if (!firestore) return;
     
+    // Find the current product to get its current visibility state
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
     const docRef = doc(firestore, PRODUCTS_COLLECTION, productId);
     try {
       await updateDoc(docRef, { isVisible: !product.isVisible });
@@ -95,7 +112,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   }, [firestore]);
 
   return (
-    <ProductContext.Provider value={{ products, toggleProductVisibility, updateProductPrice, loading }}>
+    <ProductContext.Provider value={{ products, loading, toggleProductVisibility, updateProductPrice }}>
       {children}
     </ProductContext.Provider>
   );

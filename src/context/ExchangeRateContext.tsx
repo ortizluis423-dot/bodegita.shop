@@ -6,10 +6,9 @@ import {
   useState,
   ReactNode,
   useEffect,
-  useCallback,
 } from 'react';
 import { useFirestore } from '@/hooks/use-firestore';
-import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
 
 const SETTINGS_COLLECTION = 'settings';
 const CONFIG_DOC = 'config';
@@ -18,7 +17,7 @@ const DEFAULT_RATE = 36.5;
 interface ExchangeRateContextType {
   rate: number;
   loading: boolean;
-  setRate: (rate: number) => void;
+  setRate: (rate: number) => Promise<void>;
 }
 
 export const ExchangeRateContext = createContext<
@@ -26,59 +25,52 @@ export const ExchangeRateContext = createContext<
 >(undefined);
 
 export const ExchangeRateProvider = ({ children }: { children: ReactNode }) => {
-  const [rate, setRateState] = useState(0);
+  const [rate, setRateState] = useState(DEFAULT_RATE);
   const [loading, setLoading] = useState(true);
   const firestore = useFirestore();
 
   useEffect(() => {
-    if (!firestore) return;
+    if (!firestore) {
+      setLoading(false);
+      return;
+    };
 
-    setLoading(true);
     const docRef = doc(firestore, SETTINGS_COLLECTION, CONFIG_DOC);
 
-    const unsubscribe = onSnapshot(
-      docRef,
-      async (docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setRateState(data.exchangeRate || DEFAULT_RATE);
-        } else {
-          // If the config document doesn't exist, create it with the default rate
-          try {
-            await setDoc(docRef, { exchangeRate: DEFAULT_RATE });
-            setRateState(DEFAULT_RATE);
-          } catch (error) {
-            console.error("Error creating config document:", error);
-            setRateState(DEFAULT_RATE); // Fallback
-          }
-        }
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Error listening to exchange rate changes:", error);
-        setRateState(DEFAULT_RATE); // Fallback on error
-        setLoading(false);
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setRateState(data.exchangeRate || DEFAULT_RATE);
+      } else {
+        // If it doesn't exist, we'll create it.
+        setDoc(docRef, { exchangeRate: DEFAULT_RATE }).catch(e => console.error("Failed to create default rate doc", e));
+        setRateState(DEFAULT_RATE);
       }
-    );
+      setLoading(false);
+    }, (error) => {
+      console.error("Error subscribing to exchange rate:", error);
+      setRateState(DEFAULT_RATE);
+      setLoading(false);
+    });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, [firestore]);
 
-
-  const setRate = useCallback(async (newRate: number) => {
+  const setRate = async (newRate: number) => {
     if (!firestore) {
       console.error("Firestore not available to set rate.");
       return;
     }
     const docRef = doc(firestore, SETTINGS_COLLECTION, CONFIG_DOC);
     try {
+      // We optimistically update the local state, but the snapshot listener will correct it
+      setRateState(newRate); 
       await setDoc(docRef, { exchangeRate: newRate }, { merge: true });
-      // The onSnapshot listener will automatically update the state
     } catch (e) {
       console.error('Could not save rate to Firestore:', e);
+      // If it fails, we should ideally revert, but the snapshot listener will handle it.
     }
-  }, [firestore]);
+  };
 
   return (
     <ExchangeRateContext.Provider value={{ rate, setRate, loading }}>
