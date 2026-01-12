@@ -31,10 +31,12 @@ import { Product } from '@/lib/types';
 import { useState } from 'react';
 
 function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: Product, onPriceChange: (id: string, price: number) => void, onVisibilityToggle: (id: string) => void }) {
-  const [price, setPrice] = useState(product.priceUSD.toString());
+  // Use state for the input field to allow editing, but initialize with the product's price.
+  // This state is local to the input, and the actual update happens onBlur.
+  const [localPrice, setLocalPrice] = useState(product.priceUSD.toString());
 
   const handlePriceBlur = () => {
-    const newPrice = parseFloat(price);
+    const newPrice = parseFloat(localPrice);
     if (!isNaN(newPrice) && newPrice !== product.priceUSD) {
       onPriceChange(product.id, newPrice);
     }
@@ -58,8 +60,8 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
         <TableCell>
           <Input
             type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={localPrice}
+            onChange={(e) => setLocalPrice(e.target.value)}
             onBlur={handlePriceBlur}
             step="0.01"
             className="h-9 w-[120px]"
@@ -103,8 +105,8 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
                 <span className="text-sm text-muted-foreground">Precio:</span>
                 <Input
                   type="number"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  value={localPrice}
+                  onChange={(e) => setLocalPrice(e.target.value)}
                   onBlur={handlePriceBlur}
                   step="0.01"
                   className="h-9 w-28"
