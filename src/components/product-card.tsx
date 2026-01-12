@@ -8,7 +8,6 @@ import { useExchangeRate } from "@/hooks/use-exchange-rate";
 import { formatToUSD, formatToVES } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
-import { useMemo } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -18,7 +17,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { rate, loading: rateLoading } = useExchangeRate();
 
-  const priceVES = useMemo(() => product.priceUSD * rate, [product.priceUSD, rate]);
+  // Eliminar useMemo para asegurar que el precio se recalcula en cada render
+  // cuando la tasa (rate) del contexto cambia.
+  const priceVES = product.priceUSD * rate;
 
   return (
     <div className="group relative flex flex-col h-full bg-card p-4 rounded-lg border shadow-sm transition-all duration-300 hover:shadow-md">
