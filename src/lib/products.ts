@@ -19,9 +19,11 @@ const glupImage = PlaceHolderImages.find(img => img.id === 'glup-chinoto-2l');
 const glupColitaImage = PlaceHolderImages.find(img => img.id === 'glup-colita-2l');
 const cartonDeHuevosImage = PlaceHolderImages.find(img => img.id === 'carton-de-huevos');
 const salRubiImage = PlaceHolderImages.find(img => img.id === 'sal-rubi-500g');
+const galletaMariaPaqueteImage = PlaceHolderImages.find(img => img.id === 'galleta-maria-paquete');
+const galletaMariaUnidadImage = PlaceHolderImages.find(img => img.id === 'galleta-maria-unidad');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage || !cartonDeHuevosImage || !salRubiImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage || !cartonDeHuevosImage || !salRubiImage || !galletaMariaPaqueteImage || !galletaMariaUnidadImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -165,6 +167,34 @@ export const products: Product[] = [
       hint: singleCigarImage.imageHint,
     },
     category: 'Cigarrillos',
+  },
+    {
+    id: '19',
+    name: 'Paquete de Galletas María',
+    description: 'Paquete de galletas María.',
+    priceUSD: 1.00,
+    image: {
+      src: galletaMariaPaqueteImage.imageUrl,
+      alt: 'Paquete de galletas María',
+      width: 225,
+      height: 225,
+      hint: galletaMariaPaqueteImage.imageHint,
+    },
+    category: 'Galletas',
+  },
+  {
+    id: '20',
+    name: 'Galleta María (unidad)',
+    description: 'Una (1) galleta María.',
+    priceUSD: 0.11,
+    image: {
+      src: galletaMariaUnidadImage.imageUrl,
+      alt: 'Una galleta María',
+      width: 225,
+      height: 225,
+      hint: galletaMariaUnidadImage.imageHint,
+    },
+    category: 'Galletas',
   },
   {
     id: '5',

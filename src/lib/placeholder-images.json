@@ -113,6 +113,18 @@
       "description": "Bolsa de Sal Refinada Rubi de 500g.",
       "imageUrl": "https://assets.tuzonamarket.com/images/producto/pgKLEjnjIQ.jpg",
       "imageHint": "salt bag"
+    },
+    {
+      "id": "galleta-maria-paquete",
+      "description": "Paquete de galletas María.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVb--xR7lFGFmuxGwL_LzVAmXNSNwe9Up-5Q&s",
+      "imageHint": "cookie package"
+    },
+    {
+      "id": "galleta-maria-unidad",
+      "description": "Una galleta María individual.",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3tFrk4EAVxPZ3k00kFqzQMBlf9bImHYXOjg&s",
+      "imageHint": "single cookie"
     }
   ]
 }
