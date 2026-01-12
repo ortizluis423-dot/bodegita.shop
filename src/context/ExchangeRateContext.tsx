@@ -8,7 +8,7 @@ import {
   useEffect,
 } from 'react';
 import { useFirestore } from '@/hooks/use-firestore';
-import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 const SETTINGS_COLLECTION = 'settings';
 const CONFIG_DOC = 'config';
@@ -42,7 +42,6 @@ export const ExchangeRateProvider = ({ children }: { children: ReactNode }) => {
         const data = docSnap.data();
         setRateState(data.exchangeRate || DEFAULT_RATE);
       } else {
-        // If it doesn't exist, we'll create it.
         setDoc(docRef, { exchangeRate: DEFAULT_RATE }).catch(e => console.error("Failed to create default rate doc", e));
         setRateState(DEFAULT_RATE);
       }
@@ -63,12 +62,9 @@ export const ExchangeRateProvider = ({ children }: { children: ReactNode }) => {
     }
     const docRef = doc(firestore, SETTINGS_COLLECTION, CONFIG_DOC);
     try {
-      // We optimistically update the local state, but the snapshot listener will correct it
-      setRateState(newRate); 
       await setDoc(docRef, { exchangeRate: newRate }, { merge: true });
     } catch (e) {
       console.error('Could not save rate to Firestore:', e);
-      // If it fails, we should ideally revert, but the snapshot listener will handle it.
     }
   };
 

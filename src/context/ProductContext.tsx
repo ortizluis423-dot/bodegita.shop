@@ -88,7 +88,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const toggleProductVisibility = useCallback(async (productId: string) => {
     if (!firestore) return;
     
-    // Find the current product to get its current visibility state
     const product = products.find(p => p.id === productId);
     if (!product) return;
 

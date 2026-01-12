@@ -31,8 +31,6 @@ import { Product } from '@/lib/types';
 import { useState } from 'react';
 
 function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: Product, onPriceChange: (id: string, price: number) => void, onVisibilityToggle: (id: string) => void }) {
-  // Use state for the input field to allow editing, but initialize with the product's price.
-  // This state is local to the input, and the actual update happens onBlur.
   const [localPrice, setLocalPrice] = useState(product.priceUSD.toString());
 
   const handlePriceBlur = () => {
@@ -41,6 +39,11 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
       onPriceChange(product.id, newPrice);
     }
   };
+
+  // When the product prop changes from the outside, update our local state
+  useState(() => {
+    setLocalPrice(product.priceUSD.toString());
+  }, [product.priceUSD]);
   
   return (
     <>

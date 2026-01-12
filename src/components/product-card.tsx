@@ -17,8 +17,6 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { rate, loading: rateLoading } = useExchangeRate();
 
-  // Eliminar useMemo para asegurar que el precio se recalcula en cada render
-  // cuando la tasa (rate) del contexto cambia.
   const priceVES = product.priceUSD * rate;
 
   return (
