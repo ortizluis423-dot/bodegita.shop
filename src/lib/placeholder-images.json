@@ -125,6 +125,12 @@
       "description": "Una galleta María individual.",
       "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3tFrk4EAVxPZ3k00kFqzQMBlf9bImHYXOjg&s",
       "imageHint": "single cookie"
+    },
+    {
+      "id": "harina-trigo-pampa",
+      "description": "Harina de trigo La Pampa 920g.",
+      "imageUrl": "https://assets.tuzonamarket.com/images/producto/SbwU1YrTbO.jpg",
+      "imageHint": "wheat flour"
     }
   ]
 }

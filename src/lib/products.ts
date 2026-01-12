@@ -21,9 +21,10 @@ const cartonDeHuevosImage = PlaceHolderImages.find(img => img.id === 'carton-de-
 const salRubiImage = PlaceHolderImages.find(img => img.id === 'sal-rubi-500g');
 const galletaMariaPaqueteImage = PlaceHolderImages.find(img => img.id === 'galleta-maria-paquete');
 const galletaMariaUnidadImage = PlaceHolderImages.find(img => img.id === 'galleta-maria-unidad');
+const harinaPampaImage = PlaceHolderImages.find(img => img.id === 'harina-trigo-pampa');
 
 
-if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage || !cartonDeHuevosImage || !salRubiImage || !galletaMariaPaqueteImage || !galletaMariaUnidadImage) {
+if (!halfEggImage || !cigarImage || !singleCigarImage || !soapImage || !singleEggImage || !catalinaImage || !toiletPaperPackImage || !toiletPaperRollImage || !coffeeImage || !nutribelaImage || !slicedBreadImage || !razorImage || !sardineImage || !detergentImage || !glupImage || !glupColitaImage || !cartonDeHuevosImage || !salRubiImage || !galletaMariaPaqueteImage || !galletaMariaUnidadImage || !harinaPampaImage) {
   throw new Error('Placeholder images not found');
 }
 
@@ -109,6 +110,20 @@ export const products: Product[] = [
       width: 500,
       height: 500,
       hint: salRubiImage.imageHint,
+    },
+    category: 'Víveres',
+  },
+  {
+    id: '21',
+    name: 'Harina de Trigo La Pampa 920g',
+    description: 'Harina de trigo todo uso La Pampa, 920g.',
+    priceUSD: 1.45,
+    image: {
+      src: harinaPampaImage.imageUrl,
+      alt: 'Harina de Trigo La Pampa 920g',
+      width: 480,
+      height: 480,
+      hint: harinaPampaImage.imageHint,
     },
     category: 'Víveres',
   },
