@@ -142,7 +142,7 @@ export default function AdminPage() {
     updateProductPrice(productId, newPrice);
     toast({
       title: "Precio Actualizado",
-      description: `El precio del producto se ha guardado.`,
+      description: `El precio del producto se ha guardado en la nube.`,
     });
   };
 
@@ -150,7 +150,7 @@ export default function AdminPage() {
     toggleProductVisibility(productId);
     toast({
       title: "Visibilidad Cambiada",
-      description: `El estado del producto ha sido actualizado.`,
+      description: `El estado del producto ha sido actualizado en la nube.`,
     });
   };
 
@@ -164,7 +164,7 @@ export default function AdminPage() {
                 Panel de Administración
               </h1>
               <p className="text-muted-foreground">
-                Gestiona tu tienda Bodeguita.
+                Gestiona tu tienda Bodeguita. Los cambios se guardan en tiempo real.
               </p>
             </div>
             <LogoutButton />

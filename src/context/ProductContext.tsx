@@ -8,11 +8,10 @@ import {
   useEffect,
   useCallback,
 } from 'react';
+import { useFirestore } from '@/hooks/use-firestore';
+import { collection, doc, getDocs, onSnapshot, writeBatch, updateDoc } from 'firebase/firestore';
 import type { Product } from '@/lib/types';
 import { products as initialProducts } from '@/lib/products';
-import { useExchangeRate } from '@/hooks/use-exchange-rate';
-
-const PRODUCT_STATE_STORAGE_KEY = 'bodega_product_state';
 
 interface ProductContextType {
   products: Product[];
@@ -25,85 +24,76 @@ export const ProductContext = createContext<ProductContextType | undefined>(
   undefined
 );
 
+const PRODUCTS_COLLECTION = 'products';
+
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const { rate } = useExchangeRate(); 
+  const firestore = useFirestore();
 
-  // Re-calculate prices when rate changes
   useEffect(() => {
-     if (!loading) {
-      setProducts(currentProducts => [...currentProducts]);
-    }
-  }, [rate, loading]);
+    if (!firestore) return;
 
-  // Load initial products from localStorage on the client side
-  useEffect(() => {
     setLoading(true);
-    let hydratedProducts: Product[];
-    try {
-      const storedState = localStorage.getItem(PRODUCT_STATE_STORAGE_KEY);
-      const baseProducts = initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true }));
-      
-      if (storedState) {
-        const productState = JSON.parse(storedState);
-        hydratedProducts = baseProducts.map((p) => ({
-          ...p,
-          isVisible: productState[p.id]?.isVisible ?? p.isVisible,
-          priceUSD: productState[p.id]?.priceUSD ?? p.priceUSD,
-        }));
+    const productsCollectionRef = collection(firestore, PRODUCTS_COLLECTION);
+    
+    // Set up a real-time listener
+    const unsubscribe = onSnapshot(productsCollectionRef, async (querySnapshot) => {
+      if (querySnapshot.empty) {
+        // If the collection is empty, populate it with initial products
+        console.log("Products collection is empty. Initializing with default products...");
+        const batch = writeBatch(firestore);
+        initialProducts.forEach(product => {
+          const docRef = doc(firestore, PRODUCTS_COLLECTION, product.id);
+          batch.set(docRef, { ...product, isVisible: product.isVisible ?? true });
+        });
+        await batch.commit();
+        // The listener will be triggered again with the new data, so we don't need to set state here.
       } else {
-        hydratedProducts = baseProducts;
+        const productsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+        productsData.sort((a, b) => {
+          const aIndex = initialProducts.findIndex(p => p.id === a.id);
+          const bIndex = initialProducts.findIndex(p => p.id === b.id);
+          return aIndex - bIndex;
+        });
+        setProducts(productsData);
       }
-    } catch (e) {
-      console.error('Could not access local storage, using initial products:', e);
-      hydratedProducts = initialProducts.map(p => ({ ...p, isVisible: p.isVisible ?? true }));
-    }
-    setProducts(hydratedProducts);
-    setLoading(false);
-  }, []);
+      setLoading(false);
+    }, (error) => {
+      console.error("Error fetching products from Firestore:", error);
+      setProducts(initialProducts); // Fallback to initial products on error
+      setLoading(false);
+    });
 
-  const saveProductState = useCallback((updatedProducts: Product[]) => {
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [firestore]);
+
+
+  const toggleProductVisibility = useCallback(async (productId: string) => {
+    const product = products.find(p => p.id === productId);
+    if (!product || !firestore) return;
+    
+    const docRef = doc(firestore, PRODUCTS_COLLECTION, productId);
     try {
-       const productState = updatedProducts.reduce((acc, p) => {
-        acc[p.id] = { isVisible: p.isVisible, priceUSD: p.priceUSD };
-        return acc;
-      }, {} as Record<string, { isVisible?: boolean, priceUSD: number }>);
-
-      localStorage.setItem(
-        PRODUCT_STATE_STORAGE_KEY,
-        JSON.stringify(productState)
-      );
-    } catch (e) {
-       console.error('Could not access local storage:', e);
+      await updateDoc(docRef, { isVisible: !product.isVisible });
+      // UI will update automatically via onSnapshot listener
+    } catch (error) {
+      console.error("Error updating product visibility:", error);
     }
-  }, []);
+  }, [products, firestore]);
 
-  const toggleProductVisibility = useCallback((productId: string) => {
-    setProducts((currentProducts) => {
-      const newProducts = currentProducts.map((p) => {
-        if (p.id === productId) {
-          return { ...p, isVisible: !p.isVisible };
-        }
-        return p;
-      });
-      saveProductState(newProducts);
-      return newProducts;
-    });
-  }, [saveProductState]);
-
-  const updateProductPrice = useCallback((productId: string, newPrice: number) => {
-    setProducts((currentProducts) => {
-      const newProducts = currentProducts.map((p) => {
-        if (p.id === productId) {
-          return { ...p, priceUSD: newPrice };
-        }
-        return p;
-      });
-      saveProductState(newProducts);
-      return newProducts;
-    });
-  }, [saveProductState]);
+  const updateProductPrice = useCallback(async (productId: string, newPrice: number) => {
+    if (!firestore) return;
+    
+    const docRef = doc(firestore, PRODUCTS_COLLECTION, productId);
+    try {
+      await updateDoc(docRef, { priceUSD: newPrice });
+      // UI will update automatically via onSnapshot listener
+    } catch (error) {
+      console.error("Error updating product price:", error);
+    }
+  }, [firestore]);
 
   return (
     <ProductContext.Provider value={{ products, toggleProductVisibility, updateProductPrice, loading }}>
