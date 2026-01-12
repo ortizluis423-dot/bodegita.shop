@@ -28,10 +28,15 @@ import { ExchangeRateAdmin } from '@/components/exchange-rate-admin';
 import { useToast } from '@/hooks/use-toast';
 import { AdminDashboard } from '@/components/admin-dashboard';
 import { Product } from '@/lib/types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: Product, onPriceChange: (id: string, price: number) => void, onVisibilityToggle: (id: string) => void }) {
   const [localPrice, setLocalPrice] = useState(product.priceUSD.toString());
+
+  // When the product prop changes from the outside (from Firestore), update our local state
+  useEffect(() => {
+    setLocalPrice(product.priceUSD.toString());
+  }, [product.priceUSD]);
 
   const handlePriceBlur = () => {
     const newPrice = parseFloat(localPrice);
@@ -39,11 +44,6 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
       onPriceChange(product.id, newPrice);
     }
   };
-
-  // When the product prop changes from the outside, update our local state
-  useState(() => {
-    setLocalPrice(product.priceUSD.toString());
-  }, [product.priceUSD]);
   
   return (
     <>
@@ -72,10 +72,10 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
         </TableCell>
         <TableCell>
           <Badge
-            variant={product.isVisible ? 'default' : 'destructive'}
+            variant={product.isVisible !== false ? 'default' : 'destructive'}
             className="bg-green-500 text-white data-[variant=destructive]:bg-red-500"
           >
-            {product.isVisible ? 'Visible' : 'Oculto'}
+            {product.isVisible !== false ? 'Visible' : 'Oculto'}
           </Badge>
         </TableCell>
         <TableCell className="text-right">
@@ -84,7 +84,7 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
             size="icon"
             onClick={() => onVisibilityToggle(product.id)}
           >
-            {product.isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {product.isVisible !== false ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             <span className="sr-only">Cambiar visibilidad</span>
           </Button>
         </TableCell>
@@ -118,10 +118,10 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
               <div className="flex items-center gap-2">
                  <span className="text-sm text-muted-foreground">Estado:</span>
                 <Badge
-                  variant={product.isVisible ? 'default' : 'destructive'}
+                  variant={product.isVisible !== false ? 'default' : 'destructive'}
                   className="bg-green-500 text-white data-[variant=destructive]:bg-red-500"
                 >
-                  {product.isVisible ? 'Visible' : 'Oculto'}
+                  {product.isVisible !== false ? 'Visible' : 'Oculto'}
                 </Badge>
               </div>
             </div>
@@ -131,7 +131,7 @@ function ProductRow({ product, onPriceChange, onVisibilityToggle }: { product: P
                 onClick={() => onVisibilityToggle(product.id)}
                 className="shrink-0"
               >
-                {product.isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {product.isVisible !== false ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 <span className="sr-only">Cambiar visibilidad</span>
               </Button>
           </div>

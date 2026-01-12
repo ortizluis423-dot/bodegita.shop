@@ -10,13 +10,16 @@ import { products as initialProducts } from '@/lib/products';
 const PRODUCTS_COLLECTION = 'products';
 
 export const useProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  // Start with local data for instant load, then hydrate with Firestore
+  const [products, setProducts] = useState<Product[]>(initialProducts);
   const [loading, setLoading] = useState(true);
   const firestore = useFirestore();
 
   useEffect(() => {
     if (!firestore) {
-        setLoading(true);
+        // If firestore is not ready, we rely on the initial static data.
+        // We can set loading to false as we are not expecting more data.
+        setLoading(false);
         return;
     };
 
@@ -37,6 +40,7 @@ export const useProducts = () => {
             });
             await batch.commit();
             // After commit, the snapshot listener will be triggered again with the new data
+            // setLoading will be set to false at that point.
         } catch (error) {
             console.error("Error initializing products:", error);
             setProducts(initialProducts); // fallback to local
@@ -60,7 +64,7 @@ export const useProducts = () => {
       }
     }, (error) => {
       console.error("Error fetching products from Firestore:", error);
-      setProducts(initialProducts); 
+      setProducts(initialProducts); // Fallback to local data on error
       setLoading(false);
     });
 
@@ -76,7 +80,8 @@ export const useProducts = () => {
 
     const docRef = doc(firestore, PRODUCTS_COLLECTION, productId);
     try {
-      await updateDoc(docRef, { isVisible: !product.isVisible });
+      // Use isVisible !== false to default to visible if undefined
+      await updateDoc(docRef, { isVisible: !(product.isVisible !== false) });
     } catch (error) {
       console.error("Error updating product visibility:", error);
     }
